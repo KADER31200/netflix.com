@@ -75,23 +75,23 @@
 
         @media (max-width: 740px) {
             .login-container {
-                padding: 1rem;
-                margin: 0;
-                min-height: 100vh;
-                background: rgba(0,0,0,0.9);
-                border-radius: 0;
+                padding: 60px 20px;
+                margin: 0 auto;
+                min-height: auto;
+                background: rgba(0,0,0,0.75);
+                border-radius: 4px;
             }
         }
 
         h1 {
-            margin: 0 0 1.5rem;
-            font-size: 2rem;
+            margin: 0 0 28px;
+            font-size: 32px;
             font-weight: 500;
         }
 
         /* Form Elements */
         .input-group {
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
             position: relative;
         }
 
@@ -99,12 +99,12 @@
         input[type="password"] {
             width: 100%;
             height: 50px;
-            padding: 1rem 1.25rem 0;
+            padding: 16px 20px 0;
             background: #333;
             border: none;
             border-radius: 4px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 16px;
         }
 
         input:focus {
@@ -114,30 +114,30 @@
 
         label {
             position: absolute;
-            top: 1rem;
-            left: 1.25rem;
+            top: 15px;
+            left: 20px;
             color: #8c8c8c;
             pointer-events: none;
             transition: all 0.1s ease;
-            font-size: 1rem;
+            font-size: 16px;
         }
 
         input:focus + label,
         input:not(:placeholder-shown) + label {
-            top: 0.5rem;
-            font-size: 0.7rem;
+            top: 7px;
+            font-size: 11px;
         }
 
         /* Button */
         .login-button {
             width: 100%;
-            padding: 1rem;
-            margin: 1.5rem 0;
+            padding: 16px;
+            margin: 24px 0 12px;
             background: #e50914;
             color: #fff;
             border: none;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 16px;
             font-weight: 500;
             cursor: pointer;
             position: relative;
@@ -152,20 +152,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
+            margin-bottom: 40px;
             color: #b3b3b3;
-            font-size: 0.85rem;
+            font-size: 13px;
         }
 
         .remember-me {
             display: flex;
             align-items: center;
+            gap: 5px;
         }
 
-        .remember-me input {
-            margin-right: 0.5rem;
-            width: auto;
-            height: auto;
+        .remember-checkbox {
+            width: 16px;
+            height: 16px;
+            background: #737373;
+            border-radius: 2px;
+            appearance: none;
+            -webkit-appearance: none;
+            position: relative;
+        }
+
+        .remember-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: #000;
+            font-size: 14px;
+            left: 3px;
+            top: -1px;
         }
 
         .help-link {
@@ -180,7 +194,8 @@
         /* Signup Link */
         .signup-text {
             color: #737373;
-            margin-top: 1rem;
+            margin-top: 16px;
+            font-size: 16px;
         }
 
         .signup-link {
@@ -195,24 +210,32 @@
         /* Footer */
         .footer {
             background: rgba(0, 0, 0, 0.75);
-            padding: 2rem 3%;
+            padding: 30px 15% 60px;
             color: #737373;
-            margin-top: 5rem;
-            font-size: 0.85rem;
+            margin-top: 90px;
+            font-size: 13px;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .footer-top {
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
         }
 
         .footer-links {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
+            .footer {
+                padding: 30px 5% 60px;
+            }
             .footer-links {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -221,7 +244,7 @@
         .footer-link {
             color: #737373;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 13px;
         }
 
         .footer-link:hover {
@@ -231,8 +254,8 @@
         /* Spinner */
         .spinner {
             display: none;
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 24px;
+            height: 24px;
             border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #fff;
@@ -285,7 +308,7 @@
                 </button>
                 <div class="options-container">
                     <div class="remember-me">
-                        <input type="checkbox" id="remember">
+                        <input type="checkbox" class="remember-checkbox" id="remember">
                         <label for="remember" id="rememberLabel">Se souvenir de moi</label>
                     </div>
                     <a href="#" class="help-link" id="helpLink">Besoin d'aide ?</a>
@@ -299,20 +322,22 @@
     </main>
 
     <footer class="footer">
-        <div class="footer-top">
-            <span id="questionsText">Des questions ? Appelez le</span> 
-            <a href="tel:(+33) 0805-543-063" class="footer-link">(+33) 0805-543-063</a>
+        <div class="footer-content">
+            <div class="footer-top">
+                <span id="questionsText">Des questions ? Appelez le</span> 
+                <a href="tel:(+33) 0805-543-063" class="footer-link">(+33) 0805-543-063</a>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link" id="faqLink">FAQ</a>
+                <a href="#" class="footer-link" id="helpCenterLink">Centre d'aide</a>
+                <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
+                <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
+                <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
+                <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
+                <a href="#" class="footer-link" id="adsLink">Choix liés à la pub</a>
+            </div>
+            <div>Netflix France</div>
         </div>
-        <div class="footer-links">
-            <a href="#" class="footer-link" id="faqLink">FAQ</a>
-            <a href="#" class="footer-link" id="helpCenterLink">Centre d'aide</a>
-            <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
-            <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
-            <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
-            <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
-            <a href="#" class="footer-link" id="adsLink">Choix liés à la pub</a>
-        </div>
-        <div>Netflix France</div>
     </footer>
 
     <script>
