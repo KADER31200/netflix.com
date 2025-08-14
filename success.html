@@ -251,7 +251,7 @@
                 Félicitations ! Votre abonnement Netflix a bien été pris en compte.<br>
                 Vous pouvez dès maintenant commencer à profiter de tous les films et séries disponibles sur Netflix.
             </div>
-      
+                      
             <button class="start-button" id="startButton">Commencer à regarder</button>
                 
             <div class="help-text">
@@ -390,6 +390,7 @@
         };
 
         function getLanguage() {
+            // 1. Vérifier le paramètre lang dans l'URL
             const urlParams = new URLSearchParams(window.location.search);
             const langParam = urlParams.get('lang');
             
@@ -398,7 +399,14 @@
                 return langParam;
             }
             
-            return localStorage.getItem('netflixLang') || 'fr';
+            // 2. Vérifier le localStorage
+            const storedLang = localStorage.getItem('netflixLang');
+            if (storedLang && translations[storedLang]) {
+                return storedLang;
+            }
+            
+            // 3. Langue par défaut
+            return 'fr';
         }
 
         function updateLanguage(lang) {
@@ -429,21 +437,29 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer et appliquer la langue
             const lang = getLanguage();
             updateLanguage(lang);
             
+            // Gérer le changement de langue
             const languageSelector = document.getElementById('languageSelector');
             if (languageSelector) {
                 languageSelector.addEventListener('change', function() {
                     const newLang = this.value;
                     localStorage.setItem('netflixLang', newLang);
                     updateLanguage(newLang);
+                    
+                    // Mettre à jour l'URL avec le nouveau paramètre lang
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('lang', newLang);
+                    window.history.replaceState({}, '', url);
                 });
             }
             
             // Redirection vers la page d'accueil Netflix au clic sur le bouton
             document.getElementById('startButton').addEventListener('click', function() {
-                window.location.href = "https://www.netflix.com";
+                const lang = getLanguage();
+                window.location.href = `https://www.netflix.com/${lang}/`;
             });
         });
     </script>
