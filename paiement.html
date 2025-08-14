@@ -689,11 +689,6 @@
                 }
             });
             
-            // Mise à jour spéciale pour les boutons "Sélectionner"
-            document.querySelectorAll('.select-button').forEach(button => {
-                button.textContent = trans.selectButton;
-            });
-            
             // Mise à jour du placeholder de la date d'expiration
             const expiryInput = document.getElementById('expiry');
             if (expiryInput) {
@@ -741,7 +736,16 @@
                     selectedPlan = this.getAttribute('data-plan');
                     const planName = this.querySelector('.plan-name').textContent;
                     const planPrice = this.querySelector('.plan-price').textContent;
-                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}/mois`;
+                    
+                    // Mettre à jour le texte du plan sélectionné selon la langue
+                    const lang = getLanguage();
+                    const monthlyText = lang === 'en' ? '/month' : 
+                                     lang === 'es' ? '/mes' : 
+                                     lang === 'de' ? '/Monat' : 
+                                     lang === 'ru' ? '/месяц' : 
+                                     lang === 'pl' ? '/miesiąc' : '/mois';
+                    
+                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}${monthlyText}`;
                     
                     paymentForm.style.display = 'block';
                     paymentForm.scrollIntoView({ behavior: 'smooth' });
