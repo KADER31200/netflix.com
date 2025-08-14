@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choisissez votre offre - Netflix</title>
+    <title id="pageTitle">Choisissez votre offre - Netflix</title>
     <style>
         * {
             margin: 0;
@@ -341,7 +341,7 @@
             <div class="plan-card" data-plan="standard-pub">
                 <div class="plan-name" id="standardPubName">Standard avec pub</div>
                 <div class="plan-price">5,99 €</div>
-                <ul class="plan-features">
+                <ul class="plan-features" id="standardPubFeatures">
                     <li>Résolution HD (720p)</li>
                     <li>Accès sur 2 appareils</li>
                     <li>Publicités pendant la lecture</li>
@@ -354,7 +354,7 @@
                 <div class="recommended-badge" id="recommendedBadge">Recommandé</div>
                 <div class="plan-name" id="standardName">Standard</div>
                 <div class="plan-price">13,49 €</div>
-                <ul class="plan-features">
+                <ul class="plan-features" id="standardFeatures">
                     <li>Résolution Full HD (1080p)</li>
                     <li>Accès sur 2 appareils</li>
                     <li>Sans publicité</li>
@@ -366,7 +366,7 @@
             <div class="plan-card" data-plan="premium">
                 <div class="plan-name" id="premiumName">Premium</div>
                 <div class="plan-price">17,99 €</div>
-                <ul class="plan-features">
+                <ul class="plan-features" id="premiumFeatures">
                     <li>Résolution Ultra HD (4K)</li>
                     <li>Accès sur 4 appareils</li>
                     <li>Sans publicité</li>
@@ -414,14 +414,14 @@
             <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
             <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
         </div>
-        <p class="footer-text">© 2023 Netflix, Inc.</p>
+        <p class="footer-text" id="copyrightText">© 2023 Netflix, Inc.</p>
     </footer>
 
     <script>
-        // Traductions multilingues
+        // Traductions multilingues complètes avec caractéristiques des plans
         const translations = {
             fr: {
-                pageTitle: "Choisissez votre offre",
+                pageTitle: "Choisissez votre offre - Netflix",
                 step1: "Choix de l'offre",
                 step2: "Création du compte",
                 step3: "Paiement",
@@ -430,19 +430,38 @@
                 premium: "Premium",
                 recommended: "Recommandé",
                 selectButton: "Sélectionner",
+                standardPubFeatures: [
+                    "Résolution HD (720p)",
+                    "Accès sur 2 appareils",
+                    "Publicités pendant la lecture",
+                    "Téléchargement non disponible"
+                ],
+                standardFeatures: [
+                    "Résolution Full HD (1080p)",
+                    "Accès sur 2 appareils",
+                    "Sans publicité",
+                    "Téléchargement sur 2 appareils"
+                ],
+                premiumFeatures: [
+                    "Résolution Ultra HD (4K)",
+                    "Accès sur 4 appareils",
+                    "Sans publicité",
+                    "Téléchargement sur 6 appareils"
+                ],
                 paymentTitle: "Informations de paiement",
-                cardName: "Nom sur la carte",
-                cardNumber: "Numéro de carte",
-                expiry: "Date d'expiration",
-                cvv: "CVV",
+                cardNameLabel: "Nom sur la carte",
+                cardNumberLabel: "Numéro de carte",
+                expiryLabel: "Date d'expiration",
+                cvvLabel: "CVV",
                 submitButton: "Commencer l'abonnement",
                 terms: "Conditions d'utilisation",
                 privacy: "Confidentialité",
                 legal: "Mentions légales",
-                cookies: "Préférences de cookies"
+                cookies: "Préférences de cookies",
+                copyright: "© 2023 Netflix, Inc."
             },
             en: {
-                pageTitle: "Choose your plan",
+                pageTitle: "Choose your plan - Netflix",
                 step1: "Plan selection",
                 step2: "Account creation",
                 step3: "Payment",
@@ -451,19 +470,38 @@
                 premium: "Premium",
                 recommended: "Recommended",
                 selectButton: "Select",
+                standardPubFeatures: [
+                    "HD resolution (720p)",
+                    "Watch on 2 devices",
+                    "Ads during playback",
+                    "Downloads not available"
+                ],
+                standardFeatures: [
+                    "Full HD resolution (1080p)",
+                    "Watch on 2 devices",
+                    "No ads",
+                    "Download on 2 devices"
+                ],
+                premiumFeatures: [
+                    "Ultra HD resolution (4K)",
+                    "Watch on 4 devices",
+                    "No ads",
+                    "Download on 6 devices"
+                ],
                 paymentTitle: "Payment information",
-                cardName: "Name on card",
-                cardNumber: "Card number",
-                expiry: "Expiration date",
-                cvv: "CVV",
+                cardNameLabel: "Name on card",
+                cardNumberLabel: "Card number",
+                expiryLabel: "Expiration date",
+                cvvLabel: "CVV",
                 submitButton: "Start membership",
                 terms: "Terms of Use",
                 privacy: "Privacy",
                 legal: "Legal Notices",
-                cookies: "Cookie Preferences"
+                cookies: "Cookie Preferences",
+                copyright: "© 2023 Netflix, Inc."
             },
             es: {
-                pageTitle: "Elige tu plan",
+                pageTitle: "Elige tu plan - Netflix",
                 step1: "Selección de plan",
                 step2: "Creación de cuenta",
                 step3: "Pago",
@@ -472,19 +510,38 @@
                 premium: "Premium",
                 recommended: "Recomendado",
                 selectButton: "Seleccionar",
+                standardPubFeatures: [
+                    "Resolución HD (720p)",
+                    "Dispositivos: 2",
+                    "Anuncios durante la reproducción",
+                    "Descargas no disponibles"
+                ],
+                standardFeatures: [
+                    "Resolución Full HD (1080p)",
+                    "Dispositivos: 2",
+                    "Sin anuncios",
+                    "Descargas en 2 dispositivos"
+                ],
+                premiumFeatures: [
+                    "Resolución Ultra HD (4K)",
+                    "Dispositivos: 4",
+                    "Sin anuncios",
+                    "Descargas en 6 dispositivos"
+                ],
                 paymentTitle: "Información de pago",
-                cardName: "Nombre en la tarjeta",
-                cardNumber: "Número de tarjeta",
-                expiry: "Fecha de vencimiento",
-                cvv: "CVV",
+                cardNameLabel: "Nombre en la tarjeta",
+                cardNumberLabel: "Número de tarjeta",
+                expiryLabel: "Fecha de vencimiento",
+                cvvLabel: "CVV",
                 submitButton: "Comenzar membresía",
                 terms: "Términos de uso",
                 privacy: "Privacidad",
                 legal: "Avisos legales",
-                cookies: "Preferencias de cookies"
+                cookies: "Preferencias de cookies",
+                copyright: "© 2023 Netflix, Inc."
             },
             de: {
-                pageTitle: "Wählen Sie Ihren Plan",
+                pageTitle: "Wählen Sie Ihren Plan - Netflix",
                 step1: "Planauswahl",
                 step2: "Kontoerstellung",
                 step3: "Zahlung",
@@ -493,19 +550,38 @@
                 premium: "Premium",
                 recommended: "Empfohlen",
                 selectButton: "Auswählen",
+                standardPubFeatures: [
+                    "HD-Auflösung (720p)",
+                    "Auf 2 Geräten",
+                    "Werbung während der Wiedergabe",
+                    "Downloads nicht verfügbar"
+                ],
+                standardFeatures: [
+                    "Full HD-Auflösung (1080p)",
+                    "Auf 2 Geräten",
+                    "Keine Werbung",
+                    "Downloads auf 2 Geräten"
+                ],
+                premiumFeatures: [
+                    "Ultra HD-Auflösung (4K)",
+                    "Auf 4 Geräten",
+                    "Keine Werbung",
+                    "Downloads auf 6 Geräten"
+                ],
                 paymentTitle: "Zahlungsinformationen",
-                cardName: "Name auf der Karte",
-                cardNumber: "Kartennummer",
-                expiry: "Ablaufdatum",
-                cvv: "CVV",
+                cardNameLabel: "Name auf der Karte",
+                cardNumberLabel: "Kartennummer",
+                expiryLabel: "Ablaufdatum",
+                cvvLabel: "CVV",
                 submitButton: "Mitgliedschaft starten",
                 terms: "Nutzungsbedingungen",
                 privacy: "Datenschutz",
                 legal: "Rechtliche Hinweise",
-                cookies: "Cookie-Einstellungen"
+                cookies: "Cookie-Einstellungen",
+                copyright: "© 2023 Netflix, Inc."
             },
             ru: {
-                pageTitle: "Выберите тариф",
+                pageTitle: "Выберите тариф - Netflix",
                 step1: "Выбор тарифа",
                 step2: "Создание аккаунта",
                 step3: "Оплата",
@@ -514,19 +590,38 @@
                 premium: "Премиум",
                 recommended: "Рекомендуем",
                 selectButton: "Выбрать",
+                standardPubFeatures: [
+                    "Разрешение HD (720p)",
+                    "На 2 устройствах",
+                    "Реклама во время просмотра",
+                    "Скачивание недоступно"
+                ],
+                standardFeatures: [
+                    "Разрешение Full HD (1080p)",
+                    "На 2 устройствах",
+                    "Без рекламы",
+                    "Скачивание на 2 устройства"
+                ],
+                premiumFeatures: [
+                    "Разрешение Ultra HD (4K)",
+                    "На 4 устройствах",
+                    "Без рекламы",
+                    "Скачивание на 6 устройств"
+                ],
                 paymentTitle: "Платежная информация",
-                cardName: "Имя на карте",
-                cardNumber: "Номер карты",
-                expiry: "Срок действия",
-                cvv: "CVV",
+                cardNameLabel: "Имя на карте",
+                cardNumberLabel: "Номер карты",
+                expiryLabel: "Срок действия",
+                cvvLabel: "CVV",
                 submitButton: "Начать подписку",
                 terms: "Условия использования",
                 privacy: "Конфиденциальность",
                 legal: "Юридические уведомления",
-                cookies: "Настройки cookie"
+                cookies: "Настройки cookie",
+                copyright: "© 2023 Netflix, Inc."
             },
             pl: {
-                pageTitle: "Wybierz swój plan",
+                pageTitle: "Wybierz swój plan - Netflix",
                 step1: "Wybór planu",
                 step2: "Tworzenie konta",
                 step3: "Płatność",
@@ -535,16 +630,35 @@
                 premium: "Premium",
                 recommended: "Polecane",
                 selectButton: "Wybierz",
+                standardPubFeatures: [
+                    "Rozdzielczość HD (720p)",
+                    "Na 2 urządzeniach",
+                    "Reklamy podczas odtwarzania",
+                    "Pobieranie niedostępne"
+                ],
+                standardFeatures: [
+                    "Rozdzielczość Full HD (1080p)",
+                    "Na 2 urządzeniach",
+                    "Bez reklam",
+                    "Pobieranie na 2 urządzenia"
+                ],
+                premiumFeatures: [
+                    "Rozdzielczość Ultra HD (4K)",
+                    "Na 4 urządzeniach",
+                    "Bez reklam",
+                    "Pobieranie na 6 urządzeń"
+                ],
                 paymentTitle: "Informacje o płatności",
-                cardName: "Imię i nazwisko na karcie",
-                cardNumber: "Numer karty",
-                expiry: "Data ważności",
-                cvv: "CVV",
+                cardNameLabel: "Imię i nazwisko na karcie",
+                cardNumberLabel: "Numer karty",
+                expiryLabel: "Data ważności",
+                cvvLabel: "CVV",
                 submitButton: "Rozpocznij członkostwo",
                 terms: "Warunki korzystania",
                 privacy: "Prywatność",
                 legal: "Informacje prawne",
-                cookies: "Preferencje dotyczące plików cookie"
+                cookies: "Preferencje dotyczące plików cookie",
+                copyright: "© 2023 Netflix, Inc."
             }
         };
 
@@ -570,7 +684,17 @@
             for (const [key, value] of Object.entries(trans)) {
                 const element = document.getElementById(key);
                 if (element) {
-                    element.textContent = value;
+                    if (Array.isArray(value)) {
+                        // Pour les listes de caractéristiques
+                        const items = element.querySelectorAll('li');
+                        items.forEach((item, index) => {
+                            if (value[index]) {
+                                item.textContent = value[index];
+                            }
+                        });
+                    } else {
+                        element.textContent = value;
+                    }
                 }
             }
             
@@ -589,6 +713,9 @@
             if (languageSelector) {
                 languageSelector.value = lang;
             }
+            
+            // Mettre à jour le titre de la page
+            document.title = trans.pageTitle;
         }
 
         // Initialiser la langue au chargement
